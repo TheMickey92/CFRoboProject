@@ -42,8 +42,8 @@
   <ItemGroup>
     <Compile Include="GameControl.cs" />
     <Compile Include="IPlayer.cs" />
-    <Compile Include="Output.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="IOutput.cs" />
+    <Compile Include="NegMaxPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

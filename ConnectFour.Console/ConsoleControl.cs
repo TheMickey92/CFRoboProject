@@ -4,7 +4,7 @@ using ConnectFour.Logic;
 
 namespace ConnectFour.Console
 {
-    public class ConsoleControl : Output, IPlayer
+    public class ConsoleControl : IOutput, IPlayer
     {
         private int player;
         public void Process(int[,] oldGameField, int[,] newGameField)
@@ -41,9 +41,9 @@ namespace ConnectFour.Console
 
             GameControl gameControl = new GameControl(this);
             if (player == 1)
-                gameControl.SetPlayer(this, new Player(gameControl));
+                gameControl.SetPlayer(this, new NegMaxPlayer(gameControl));
             else
-                gameControl.SetPlayer(new Player(gameControl), this);
+                gameControl.SetPlayer(new NegMaxPlayer(gameControl), this);
 
             gameControl.SetGameFieldAndPlayer(oldGameField, player);
             gameControl.ResetPossibleMoves();
