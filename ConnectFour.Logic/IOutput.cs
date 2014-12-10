@@ -2,7 +2,7 @@
 
 namespace ConnectFour.Logic
 {
-    public interface Output
+    public interface IOutput
     {
         void SetField(Point field, int currentPlayer);
         void Win(Point field, int currentPlayer);

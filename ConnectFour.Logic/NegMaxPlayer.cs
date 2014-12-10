@@ -3,14 +3,14 @@ using System.Drawing;
 
 namespace ConnectFour.Logic
 {
-    public class Player : IPlayer
+    public class NegMaxPlayer : IPlayer
     {
         private GameControl gameControl;
         private Random random;
         private int globalCurrentPlayerBuffer;
         private const int MAX_DEEP = 5;
 
-        public Player(GameControl gameControl)
+        public NegMaxPlayer(GameControl gameControl)
         {
             this.gameControl = gameControl;
             random = new Random();

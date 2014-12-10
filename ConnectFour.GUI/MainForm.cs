@@ -4,7 +4,7 @@ using ConnectFour.Logic;
 
 namespace ConnectFour
 {
-    public partial class MainForm : Form, IPlayer, Output
+    public partial class MainForm : Form, IPlayer, IOutput
     {
         private Button[,] buttons;
         private GameControl gameControl;
@@ -99,7 +99,7 @@ namespace ConnectFour
         private void newGame()
         {
             ClearField();
-            gameControl.NewGame(this, new Player(gameControl));
+            gameControl.NewGame(this, new NegMaxPlayer(gameControl));
         }
     }
 }

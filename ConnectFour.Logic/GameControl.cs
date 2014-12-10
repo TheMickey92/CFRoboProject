@@ -5,7 +5,7 @@ namespace ConnectFour.Logic
 {
     public class GameControl
     {
-        private Output output;
+        private IOutput output;
         private IPlayer[] player = new IPlayer[2];
         private int[,] gamefield;
         private Point[] possibleMoves = new Point[7];
@@ -14,7 +14,7 @@ namespace ConnectFour.Logic
         public int ValidMovesCount { get; set; }
         public int CurrentPlayer { get; set; }
 
-        public GameControl(Output output)
+        public GameControl(IOutput output)
         {
             this.output = output;
             newGameData();
