@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.Logic", "ConnectFour.Logic\ConnectFour.Logic.csproj", "{7932FC0F-D8FF-4A67-BA55-664A2615BFA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.Console", "ConnectFour.Console\ConnectFour.Console.csproj", "{119CDDF2-EB98-4447-B95B-71C8269EABF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.GUI", "ConnectFour.GUI\ConnectFour.GUI.csproj", "{B531B74D-9F05-433C-A214-1892BA11A53D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7932FC0F-D8FF-4A67-BA55-664A2615BFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7932FC0F-D8FF-4A67-BA55-664A2615BFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7932FC0F-D8FF-4A67-BA55-664A2615BFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7932FC0F-D8FF-4A67-BA55-664A2615BFA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{119CDDF2-EB98-4447-B95B-71C8269EABF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{119CDDF2-EB98-4447-B95B-71C8269EABF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{119CDDF2-EB98-4447-B95B-71C8269EABF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{119CDDF2-EB98-4447-B95B-71C8269EABF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B531B74D-9F05-433C-A214-1892BA11A53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B531B74D-9F05-433C-A214-1892BA11A53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B531B74D-9F05-433C-A214-1892BA11A53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B531B74D-9F05-433C-A214-1892BA11A53D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

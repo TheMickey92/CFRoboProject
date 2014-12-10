@@ -1,0 +1,11 @@
+C:\Users\MarcelB\documents\visual studio 2013\Projects\ConnectFour\ConnectFour.Logic\bin\Debug\Newtonsoft.Json.dll
+C:\Users\MarcelB\documents\visual studio 2013\Projects\ConnectFour\ConnectFour.Logic\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\MarcelB\documents\visual studio 2013\Projects\ConnectFour\ConnectFour.Logic\bin\Debug\Newtonsoft.Json.xml
+C:\Users\MarcelB\documents\visual studio 2013\Projects\ConnectFour\ConnectFour.Logic\bin\Debug\CFLogic.dll
+C:\Users\MarcelB\documents\visual studio 2013\Projects\ConnectFour\ConnectFour.Logic\bin\Debug\CFLogic.pdb
+C:\Users\MarcelB\documents\visual studio 2013\Projects\ConnectFour\ConnectFour.Logic\obj\Debug\CFLogic.dll
+C:\Users\MarcelB\documents\visual studio 2013\Projects\ConnectFour\ConnectFour.Logic\obj\Debug\CFLogic.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\bin\Debug\CFLogic.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\bin\Debug\CFLogic.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\obj\Debug\CFLogic.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\obj\Debug\CFLogic.pdb
