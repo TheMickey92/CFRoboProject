@@ -61,7 +61,7 @@ namespace ConnectFour.Console
         public void SetField(Point field, int currentPlayer)
         {
             if (currentPlayer == player) return;
-            System.Console.WriteLine(field.X + " " + field.Y + " " + currentPlayer + " -1");
+            System.Console.WriteLine(field.X + " " + field.Y + " " + (currentPlayer==1?2:1) + " -1");
             Environment.Exit(0);
         }
 
