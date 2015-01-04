@@ -337,13 +337,16 @@ namespace ConnectFour.Logic
                     {
                         ValidMovesCount++;
                         possibleMoves[x] = new Point(x, y);
-                        if (yPos < y)
+                        if (yPos > y)
                             yPos = y;
 
                         break;
                     }
                 }
             }
+
+            if (yPos > 0)
+                yPos -= 1;
         }
 
         public void SetGameFieldAndPlayer(int[,] newGameField, int player)
