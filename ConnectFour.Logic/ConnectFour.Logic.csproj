@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CatchMoves\RowTrick.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IOutput.cs" />

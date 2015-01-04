@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using ConnectFour.Logic.CatchMoves;
 
 namespace ConnectFour.Logic
 {
@@ -153,9 +154,7 @@ namespace ConnectFour.Logic
 
         public bool IsSet(Point p)
         {
-            if (gamefield[p.X, p.Y] != 0)
-                return true;
-            return false;
+            return gamefield[p.X, p.Y] != 0;
         }
 
         public int CheckWin()
@@ -353,6 +352,11 @@ namespace ConnectFour.Logic
         {
             gamefield = newGameField;
             CurrentPlayer = player;
+        }
+
+        public Point CatchRowTrick()
+        {
+            return RowTrick.CatchRowTrick(CurrentPlayer, gamefield);
         }
     }
 }

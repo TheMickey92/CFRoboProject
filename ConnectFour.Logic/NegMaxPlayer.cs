@@ -8,7 +8,7 @@ namespace ConnectFour.Logic
         private GameControl gameControl;
         private Random random;
         private int globalCurrentPlayerBuffer;
-        private const int MAX_DEEP = 5;
+        private const int MAX_DEEP = 6;
 
         public NegMaxPlayer(GameControl gameControl)
         {
@@ -22,6 +22,7 @@ namespace ConnectFour.Logic
 
             Point winPointOpponent = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
             Point winPointCurrentPlayer = gameControl.GetWinPoint(gameControl.CurrentPlayer);
+            Point catchRowTrick = gameControl.CatchRowTrick();
 
             if (winPointCurrentPlayer.X != -1 && winPointCurrentPlayer.Y != -1)
             {
@@ -30,6 +31,10 @@ namespace ConnectFour.Logic
             else if (winPointOpponent.X != -1 && winPointOpponent.Y != -1)
             {
                 gameControl.Move(winPointOpponent);
+            }
+            else if (catchRowTrick.X != -1 && catchRowTrick.Y != -1)
+            {
+                gameControl.Move(catchRowTrick);
             }
             else
             {
