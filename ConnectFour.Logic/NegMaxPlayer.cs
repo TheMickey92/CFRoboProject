@@ -8,7 +8,7 @@ namespace ConnectFour.Logic
         private GameControl gameControl;
         private Random random;
         private int globalCurrentPlayerBuffer;
-        private const int MAX_DEEP = 6;
+        private const int MAX_DEEP = 5;
 
         public NegMaxPlayer(GameControl gameControl)
         {
@@ -48,18 +48,19 @@ namespace ConnectFour.Logic
                 double alpha = double.MinValue;
                 for (int i = 0; i < 7; i++)
                 {
-                    if (possibleMoves[i].X == -1) continue;
+                    if (!MoveCheck.PointValid(possibleMoves[i])) continue;
 
                     Point pMove = new Point(possibleMoves[i].X, possibleMoves[i].Y);
                     // Prüfen, ob nach setzen dieses Steins diagonal eine Siegmöglichkeit für den Gegner entsteht
                     // -> Bad Move
                     double eval;
-
                     if (checkBadMove(pMove))
                         eval = -1;
                     else
+                    {
                         eval = scoreMove(pMove, 0);
-                    
+                    }
+
 
                     if (eval > alpha)
                     {
@@ -121,12 +122,13 @@ namespace ConnectFour.Logic
             double alpha = double.MinValue;
             for (int i = 0; i < 7; i++)
             {
-                if (possibleMoves[i].X != -1)
-                    alpha = Math.Max(alpha, -1.0 * scoreMove(new Point(possibleMoves[i].X, possibleMoves[i].Y), deep + 1));
+                if (MoveCheck.PointValid(possibleMoves[i]))
+                {
+                    alpha = Math.Max(alpha, -1.0*scoreMove(new Point(possibleMoves[i].X, possibleMoves[i].Y), deep + 1));
+                }
             }
 
             gameControl.UnSet(move);
-            //gameControl.CurrentPlayer = currentPlayerBuffer;
             gameControl.SwapPlayer();
             return alpha;
         }

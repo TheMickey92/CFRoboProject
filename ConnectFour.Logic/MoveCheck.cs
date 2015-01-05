@@ -37,7 +37,7 @@ namespace ConnectFour.Logic
 
         public static bool PointValid(Point p)
         {
-            return p.X != -1 && p.Y != 1;
+            return p.X != -1 && p.Y != -1;
         }
     }
 }
