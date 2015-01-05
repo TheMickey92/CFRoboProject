@@ -87,8 +87,6 @@ namespace ConnectFour.Logic
             SwapPlayer();
             player[CurrentPlayer - 1].Turn();
         }
-
-
         
         public void Set(int x, int y)
         {
@@ -166,20 +164,20 @@ namespace ConnectFour.Logic
                         if (x < 4)
                         {
                             // Check X-Axis
-                            if (IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y), new Point(x + 2, y), new Point(x + 3, y) }, CurrentPlayer))
+                            if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y), new Point(x + 2, y), new Point(x + 3, y) }, CurrentPlayer, gamefield))
                                 return CurrentPlayer;
 
                             if (y > 2)
                             {
                                 // Check diagonal upwards
-                                if (IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y - 1), new Point(x + 2, y - 2), new Point(x + 3, y - 3) }, CurrentPlayer))
+                                if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y - 1), new Point(x + 2, y - 2), new Point(x + 3, y - 3) }, CurrentPlayer, gamefield))
                                     return CurrentPlayer;
                             }
 
                             if (y < 3)
                             {
                                 // Check diagonal downwoards
-                                if (IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y + 1), new Point(x + 2, y + 2), new Point(x + 3, y + 3) }, CurrentPlayer))
+                                if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y + 1), new Point(x + 2, y + 2), new Point(x + 3, y + 3) }, CurrentPlayer, gamefield))
                                     return CurrentPlayer;
                             }
                         }
@@ -187,7 +185,7 @@ namespace ConnectFour.Logic
                         if (y < 3)
                         {
                             // Check Y-Axis
-                            if (IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x, y + 1), new Point(x, y + 2), new Point(x, y + 3) }, CurrentPlayer))
+                            if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x, y + 1), new Point(x, y + 2), new Point(x, y + 3) }, CurrentPlayer, gamefield))
                                 return CurrentPlayer;
                         }
                     }
@@ -199,108 +197,12 @@ namespace ConnectFour.Logic
         }
 
 
-
         public Point GetWinPoint(int player)
         {
-            for (int y = yPos; y < 6; y++)
-            {
-                for (int x = 0; x < 7; x++)
-                {
-                    if (x < 4)
-                    {
-                        // Check X-Axis
-                        Point rpx = searchWinPoint(new List<Point>() { new Point(x, y), new Point(x + 1, y), new Point(x + 2, y), new Point(x + 3, y) }, player);
-                        if (rpx.X != -1 && rpx.Y != -1)
-                            return rpx;
-
-                       
-                        if (y > 2)
-                        {
-                            // Check diagonal upwards
-                            Point rpdu = searchWinPoint(new List<Point>() { new Point(x, y), new Point(x + 1, y - 1), new Point(x + 2, y - 2), new Point(x + 3, y - 3) }, player);
-                            if (rpdu.X != -1 && rpdu.Y != -1)
-                                return rpdu;
-                        }
-
-                        if (y < 3)
-                        {
-                            // Check diagonal downwoards
-                            Point rpdd = searchWinPoint(new List<Point>() { new Point(x, y), new Point(x + 1, y + 1), new Point(x + 2, y + 2), new Point(x + 3, y + 3) }, player);
-                            if (rpdd.X != -1 && rpdd.Y != -1)
-                                return rpdd;
-
-                            
-                        }
-                    }
-
-                    if (y < 3)
-                    {
-                        // Check Y-Axis
-                        Point rpy = searchWinPoint(new List<Point>() { new Point(x, y), new Point(x, y + 1), new Point(x, y + 2), new Point(x, y + 3)}, player);
-                        if (rpy.X != -1 && rpy.Y != -1)
-                            return rpy;
-
-                        
-                    }
-                }
-            }
-
-            return new Point(-1, -1);
+            return WinPoint.GetWinPoint(player, yPos, gamefield);
         }
-
-        private bool isMoveAllowed(Point p)
-        {
-            return p.Y >= 0 && p.X >= 0 && p.X < 7 && !IsSet(p) && (p.Y == 5 || IsSet(p.X, p.Y + 1));
-        }
-
-
-        private Point searchWinPoint(List<Point> points, int player)
-        {
-            int count = 0;
-            List<Point> setPoints = new List<Point>();
-            foreach (Point point in points)
-            {
-                if (IsSetByPlayer(point, player))
-                {
-                    count++;
-                    setPoints.Add(point);
-                }
-            }
-
-            if(count != 3)
-                return new Point(-1, -1);
-
-            // get the points which is not set and return it if allowed
-            foreach (Point point in points)
-            {
-                if (!setPoints.Contains(point))
-                {
-                    return isMoveAllowed(point) ? point : new Point(-1, -1);
-                }
-            }
-
-            return new Point(-1, -1);
-        }
-        private bool IsSetByPlayer(List<Point> points, int player)
-        {
-            foreach (Point point in points)
-            {
-                if (!IsSetByPlayer(point, player))
-                    return false;
-            }
-
-            return true;
-        }
-
-        private bool IsSetByPlayer(Point p, int player)
-        {
-            return IsSetByPlayer(p.X, p.Y, player);
-        }
-        private bool IsSetByPlayer(int x, int y, int player)
-        {
-            return Get(x, y) == player;
-        }
-
+        
+        
         public Point[] GetPossibleMoves()
         {
             return possibleMoves;
@@ -357,6 +259,11 @@ namespace ConnectFour.Logic
         public Point CatchRowTrick()
         {
             return RowTrick.CatchRowTrick(CurrentPlayer, gamefield);
+        }
+
+        public Point UseRowTrick()
+        {
+            return RowTrick.UseRowTrick(CurrentPlayer, gamefield);
         }
     }
 }

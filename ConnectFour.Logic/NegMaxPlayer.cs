@@ -23,18 +23,23 @@ namespace ConnectFour.Logic
             Point winPointOpponent = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
             Point winPointCurrentPlayer = gameControl.GetWinPoint(gameControl.CurrentPlayer);
             Point catchRowTrick = gameControl.CatchRowTrick();
+            Point useRowtrick = gameControl.UseRowTrick();
 
-            if (winPointCurrentPlayer.X != -1 && winPointCurrentPlayer.Y != -1)
+            if (MoveCheck.PointValid(winPointCurrentPlayer))
             {
                 gameControl.Move(winPointCurrentPlayer);
             }
-            else if (winPointOpponent.X != -1 && winPointOpponent.Y != -1)
+            else if (MoveCheck.PointValid(winPointOpponent))
             {
                 gameControl.Move(winPointOpponent);
             }
-            else if (catchRowTrick.X != -1 && catchRowTrick.Y != -1)
+            else if (MoveCheck.PointValid(catchRowTrick))
             {
                 gameControl.Move(catchRowTrick);
+            }
+            else if (MoveCheck.PointValid(useRowtrick))
+            {
+                gameControl.Move(useRowtrick);
             }
             else
             {

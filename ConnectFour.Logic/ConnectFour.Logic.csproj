@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CatchMoves\RowTrick.cs" />
+    <Compile Include="CatchMoves\WinPoint.cs" />
+    <Compile Include="MoveCheck.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IOutput.cs" />
