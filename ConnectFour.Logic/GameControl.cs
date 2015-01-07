@@ -56,7 +56,7 @@ namespace ConnectFour.Logic
         public void Move(Point p)
         {
             // darf Feld überhaupt gesetzt werden?
-            if (IsSet(p) || (p.Y <= 4 && !IsSet(p.X, p.Y + 1)))
+            if(!MoveCheck.IsMoveAllowed(p, gamefield))
             {
                 player[CurrentPlayer-1].Turn();
                 return;
@@ -145,6 +145,12 @@ namespace ConnectFour.Logic
             return gamefield[p.X, p.Y];
         }
 
+        public int[,] GetGamefield()
+        {
+            int[,] clone = (int[,]) gamefield.Clone();
+            return clone;
+        }
+
         public bool IsSet(int x, int y)
         {
             return IsSet(new Point(x, y));
@@ -199,7 +205,7 @@ namespace ConnectFour.Logic
 
         public Point GetWinPoint(int player)
         {
-            return WinPoint.GetWinPoint(player, yPos, gamefield);
+            return WinPoint.GetWinPoint(player, gamefield);
         }
         
         
