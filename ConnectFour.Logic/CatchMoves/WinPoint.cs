@@ -5,7 +5,7 @@ namespace ConnectFour.Logic.CatchMoves
 {
     static class WinPoint
     {
-        public static Point GetWinPoint(int player, int yPos, int[,] gamefield)
+        public static Point GetWinPoint(int player, int[,] gamefield)
         {
             for (int y = 0; y < 6; y++)
             {

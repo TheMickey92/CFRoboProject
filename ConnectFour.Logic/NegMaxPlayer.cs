@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using ConnectFour.Logic.CatchMoves;
 
 namespace ConnectFour.Logic
 {
@@ -108,6 +109,22 @@ namespace ConnectFour.Logic
             if (globalCurrentPlayerBuffer == 1 && win2 || globalCurrentPlayerBuffer == 2 && win1)
                 return -1;
             
+            // Prüfen, ob Row Trick möglich ist. Wenn ja, dann ist Sieg schon sicher
+            Point rowTrick = RowTrick.UseRowTrick(gameControl.CurrentPlayer, gameControl.GetGamefield());
+            if (MoveCheck.PointValid(rowTrick))
+                return 1;
+
+            Point winPoint = WinPoint.GetWinPoint(gameControl.CurrentPlayer, gameControl.GetGamefield());
+            Point winPointOpponent = WinPoint.GetWinPoint(gameControl.CurrentPlayer==1?2:1, gameControl.GetGamefield());
+            
+            // Wenn aktueller Spieler 3 in einer Reihe hat, der Gegner aber nicht, dann ist Sieg ebenfalls bereits sicher
+            if (MoveCheck.PointValid(winPoint) && !MoveCheck.PointValid(winPointOpponent))
+                return 1;
+
+            // Wenn Gegner 3 in einer Reihe, aktueller Spieler aber nicht, dann schon verloren
+            if (!MoveCheck.PointValid(winPoint) && MoveCheck.PointValid(winPointOpponent))
+                return -1;
+
 
             if (deep == MAX_DEEP) // Abbruch, um zeitnah zu bleiben!
             {
