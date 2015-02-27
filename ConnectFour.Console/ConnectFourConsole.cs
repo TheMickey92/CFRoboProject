@@ -1,5 +1,6 @@
 ﻿using System;
 using ConnectFour.FischertechnikInterface;
+using ConnectFour.Vision;
 
 namespace ConnectFour.Console
 {
@@ -7,6 +8,7 @@ namespace ConnectFour.Console
     {
         private static void Main(string[] args)
         {
+            args = new[] {"vision"};
             //int[,] oldGameField = new int[7, 6];
             //oldGameField[3, 5] = 2;
             //oldGameField[4, 5] = 1;
@@ -54,7 +56,10 @@ namespace ConnectFour.Console
 
         private static void handleVisionCall()
         {
-            // TODO
+            VisionControl visionControl = new VisionControl();
+            int[,] gamefield = visionControl.Process();
+            string json = InputHandling.GetJsonFrom2DArray(gamefield);
+            System.Console.WriteLine(json);
             Environment.Exit(0);
         }
 

@@ -1,0 +1,12 @@
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\Vision.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\Vision.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.Imaging.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.Math.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\Newtonsoft.Json.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.Imaging.xml
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.Math.xml
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.xml
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\obj\Debug\ConnectFour.Vision.csprojResolveAssemblyReference.cache
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\obj\Debug\Vision.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\obj\Debug\Vision.pdb

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.GUI", "ConnectF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.FischertechnikInterface", "ConnectFour.FischertechnikInterface\ConnectFour.FischertechnikInterface.csproj", "{519E07F8-9393-4AA6-B058-502578F59AF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.Vision", "ConnectFour.Vision\ConnectFour.Vision.csproj", "{4BD3448A-AA03-4EA4-8FCD-E59113152235}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{519E07F8-9393-4AA6-B058-502578F59AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{519E07F8-9393-4AA6-B058-502578F59AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{519E07F8-9393-4AA6-B058-502578F59AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD3448A-AA03-4EA4-8FCD-E59113152235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD3448A-AA03-4EA4-8FCD-E59113152235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD3448A-AA03-4EA4-8FCD-E59113152235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD3448A-AA03-4EA4-8FCD-E59113152235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

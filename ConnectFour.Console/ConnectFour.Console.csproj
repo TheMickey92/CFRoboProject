@@ -65,6 +65,10 @@
       <Project>{7932FC0F-D8FF-4A67-BA55-664A2615BFA9}</Project>
       <Name>ConnectFour.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConnectFour.Vision\ConnectFour.Vision.csproj">
+      <Project>{4BD3448A-AA03-4EA4-8FCD-E59113152235}</Project>
+      <Name>ConnectFour.Vision</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
