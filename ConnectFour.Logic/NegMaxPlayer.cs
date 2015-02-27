@@ -21,28 +21,7 @@ namespace ConnectFour.Logic
         {
             Point[] possibleMoves = gameControl.GetPossibleMoves();
 
-            Point winPointOpponent = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
-            Point winPointCurrentPlayer = gameControl.GetWinPoint(gameControl.CurrentPlayer);
-            Point catchRowTrick = gameControl.CatchRowTrick();
-            Point useRowtrick = gameControl.UseRowTrick();
-
-            if (MoveCheck.PointValid(winPointCurrentPlayer))
-            {
-                gameControl.Move(winPointCurrentPlayer);
-            }
-            else if (MoveCheck.PointValid(winPointOpponent))
-            {
-                gameControl.Move(winPointOpponent);
-            }
-            else if (MoveCheck.PointValid(catchRowTrick))
-            {
-                gameControl.Move(catchRowTrick);
-            }
-            else if (MoveCheck.PointValid(useRowtrick))
-            {
-                gameControl.Move(useRowtrick);
-            }
-            else
+            if(!catchMovePlayed())
             {
                 Point move = new Point();
                 globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
@@ -70,13 +49,41 @@ namespace ConnectFour.Logic
                     }
 
                     gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
-
-                    if (Math.Abs(alpha - 1) < 0.00001)
-                        break;
                 }
 
                 gameControl.Move(move);
             }
+        }
+
+        private bool catchMovePlayed()
+        {
+            Point winPointOpponent = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
+            Point winPointCurrentPlayer = gameControl.GetWinPoint(gameControl.CurrentPlayer);
+            Point catchRowTrick = gameControl.CatchRowTrick();
+            Point useRowtrick = gameControl.UseRowTrick();
+
+            if (MoveCheck.PointValid(winPointCurrentPlayer))
+            {
+                gameControl.Move(winPointCurrentPlayer);
+            }
+            else if (MoveCheck.PointValid(winPointOpponent))
+            {
+                gameControl.Move(winPointOpponent);
+            }
+            else if (MoveCheck.PointValid(catchRowTrick))
+            {
+                gameControl.Move(catchRowTrick);
+            }
+            else if (MoveCheck.PointValid(useRowtrick))
+            {
+                gameControl.Move(useRowtrick);
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private bool checkBadMove(Point move)
@@ -99,7 +106,7 @@ namespace ConnectFour.Logic
             bool win1 = win == 1;
             bool win2 = win == 2;
 
-
+            
             if (gameControl.ValidMovesCount == 0 && !win1 && ! win2) // DRAW!
                 return 0;
 
@@ -108,22 +115,10 @@ namespace ConnectFour.Logic
 
             if (globalCurrentPlayerBuffer == 1 && win2 || globalCurrentPlayerBuffer == 2 && win1)
                 return -1;
-            
-            // Prüfen, ob Row Trick möglich ist. Wenn ja, dann ist Sieg schon sicher
-            Point rowTrick = RowTrick.UseRowTrick(gameControl.CurrentPlayer, gameControl.GetGamefield());
-            if (MoveCheck.PointValid(rowTrick))
-                return 1;
 
-            Point winPoint = WinPoint.GetWinPoint(gameControl.CurrentPlayer, gameControl.GetGamefield());
-            Point winPointOpponent = WinPoint.GetWinPoint(gameControl.CurrentPlayer==1?2:1, gameControl.GetGamefield());
-            
-            // Wenn aktueller Spieler 3 in einer Reihe hat, der Gegner aber nicht, dann ist Sieg ebenfalls bereits sicher
-            if (MoveCheck.PointValid(winPoint) && !MoveCheck.PointValid(winPointOpponent))
-                return 1;
-
-            // Wenn Gegner 3 in einer Reihe, aktueller Spieler aber nicht, dann schon verloren
-            if (!MoveCheck.PointValid(winPoint) && MoveCheck.PointValid(winPointOpponent))
-                return -1;
+            int catched = catchMoves();
+            if (catched != -2)
+                return catched;
 
 
             if (deep == MAX_DEEP) // Abbruch, um zeitnah zu bleiben!
@@ -148,6 +143,27 @@ namespace ConnectFour.Logic
             gameControl.UnSet(move);
             gameControl.SwapPlayer();
             return alpha;
+        }
+
+        private int catchMoves()
+        {
+            // Prüfen, ob Row Trick möglich ist. Wenn ja, dann ist Sieg schon sicher
+            Point rowTrick = RowTrick.UseRowTrick(gameControl.CurrentPlayer, gameControl.GetGamefield());
+            if (MoveCheck.PointValid(rowTrick))
+                return 1;
+
+            Point winPoint = WinPoint.GetWinPoint(gameControl.CurrentPlayer, gameControl.GetGamefield());
+            Point winPointOpponent = WinPoint.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1, gameControl.GetGamefield());
+
+            // Wenn aktueller Spieler 3 in einer Reihe hat, der Gegner aber nicht, dann ist Sieg ebenfalls bereits sicher
+            if (MoveCheck.PointValid(winPoint) && !MoveCheck.PointValid(winPointOpponent))
+                return 1;
+
+            // Wenn Gegner 3 in einer Reihe, aktueller Spieler aber nicht, dann schon verloren
+            if (!MoveCheck.PointValid(winPoint) && MoveCheck.PointValid(winPointOpponent))
+                return -1;
+
+            return -2;
         }
     }
 }
