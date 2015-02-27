@@ -17,3 +17,5 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Console\bin\Debug\CFLogic.dll
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Console\bin\Debug\CFLogic.pdb
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Console\obj\Debug\ConnectFour.Console.csprojResolveAssemblyReference.cache
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Console\bin\Debug\ConnectFour.FischertechnikInterface.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Console\bin\Debug\ConnectFour.FischertechnikInterface.pdb

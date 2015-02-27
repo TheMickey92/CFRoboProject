@@ -1,10 +1,11 @@
 ﻿using System;
+using ConnectFour.FischertechnikInterface;
 
 namespace ConnectFour.Console
 {
     public class ConnectFourConsole
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //int[,] oldGameField = new int[7, 6];
             //oldGameField[3, 5] = 2;
@@ -30,14 +31,65 @@ namespace ConnectFour.Console
             //    jsonNewGameField
             //};
 
+            if (args.Length > 0)
+            {
+                if(args[0] != "vision" && args[0] != "robot")
+                {
+                    handleLogicCall(args);
+                }
+
+                if (args[0] == "robot")
+                {
+                    handleRobotCall(args);
+                }
+
+                if (args[0] == "vision")
+                {
+                    handleVisionCall();
+                }
+            }
+            System.Console.WriteLine("-1 -1 -1 -3");
+            Environment.Exit(0);
+        }
+
+        private static void handleVisionCall()
+        {
+            // TODO
+            Environment.Exit(0);
+        }
+
+        private static void handleRobotCall(string[] args)
+        {
             if (args.Length != 2)
+            {
+                System.Console.WriteLine("-1");
+                Environment.Exit(0);
+            }
+
+            RobotControl robotControl = new RobotControl();
+            bool success = robotControl.PlayMove(Convert.ToInt32(args[1]));
+            // Wenn der Spielzug erfolgreich ausgeführt wurde, gib 1 zurück, ansosnten -1
+            System.Console.WriteLine(success ? "1" : "-1");
+            Environment.Exit(0);
+        }
+
+        private static void handleLogicCall(string[] args)
+        {
+            int length = (args[0] == "logic")?3:2;
+            
+            if (args.Length != length)
             {
                 System.Console.WriteLine("-1 -1 -1 -3");
                 Environment.Exit(0);
             }
 
-            ConsoleControl consoleControl = new ConsoleControl();
-            consoleControl.Process(args[0], args[1]);
+            LogicProcessor consoleControl = new LogicProcessor();
+            if (length == 2)
+                consoleControl.Process(args[0], args[1]);
+            else
+                consoleControl.Process(args[1], args[2]);
+
+            Environment.Exit(0);
         }
     }
 }

@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectFourConsole.cs" />
-    <Compile Include="ConsoleControl.cs" />
+    <Compile Include="LogicProcessor.cs" />
     <Compile Include="InputHandling.cs" />
     <Compile Include="InputState.cs" />
     <Compile Include="ProcessedInformation.cs" />
@@ -57,6 +57,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConnectFour.FischertechnikInterface\ConnectFour.FischertechnikInterface.csproj">
+      <Project>{519E07F8-9393-4AA6-B058-502578F59AF2}</Project>
+      <Name>ConnectFour.FischertechnikInterface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ConnectFour.Logic\ConnectFour.Logic.csproj">
       <Project>{7932FC0F-D8FF-4A67-BA55-664A2615BFA9}</Project>
       <Name>ConnectFour.Logic</Name>

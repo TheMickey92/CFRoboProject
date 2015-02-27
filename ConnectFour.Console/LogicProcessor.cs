@@ -4,7 +4,7 @@ using ConnectFour.Logic;
 
 namespace ConnectFour.Console
 {
-    public class ConsoleControl : IOutput, IPlayer
+    public class LogicProcessor : IOutput, IPlayer
     {
         private int player;
         public void Process(int[,] oldGameField, int[,] newGameField)
