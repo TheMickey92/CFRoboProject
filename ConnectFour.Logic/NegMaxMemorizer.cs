@@ -18,7 +18,7 @@ namespace ConnectFour.Logic
 
         public NegMaxMemorizer(int max_deep)
         {
-            gameControl = new GameControl(this){CurrentPlayer = 1};
+            gameControl = new GameControl(this);
             MAX_DEEP = max_deep;
         }
 
@@ -27,13 +27,19 @@ namespace ConnectFour.Logic
             if (File.Exists(movePath))
                 File.Delete(movePath);
 
-            Point[] possibleMoves = gameControl.GetPossibleMoves();
+            gameControl.CurrentPlayer = 1;
+            gameControl.Set(4, 5);
+            gameControl.CurrentPlayer = 2;
+            gameControl.Set(4, 4);
+            gameControl.CurrentPlayer = 1;
 
+            Point[] possibleMoves = gameControl.GetPossibleMoves();
+            
             globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
-            int i = 4; // beginne in der Mitte
-            //for (int i = 0; i < 7; i++)
-            //{
-                //if (!MoveCheck.PointValid(possibleMoves[i])) continue;
+            
+            for (int i = 0; i < 7; i++)
+            {
+                if (!MoveCheck.PointValid(possibleMoves[i])) continue;
 
                 Point pMove = new Point(possibleMoves[i].X, possibleMoves[i].Y);
                 // Prüfen, ob nach setzen dieses Steins diagonal eine Siegmöglichkeit für den Gegner entsteht
@@ -49,7 +55,7 @@ namespace ConnectFour.Logic
                 // Save result
 
                 gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
-            //}
+            }
 
             writeGameFieldStrings();
         }
