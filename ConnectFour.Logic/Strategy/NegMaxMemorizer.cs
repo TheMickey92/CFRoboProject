@@ -44,12 +44,13 @@ namespace ConnectFour.Logic.Strategy
                 Point pMove = new Point(possibleMoves[i].X, possibleMoves[i].Y);
                 // Prüfen, ob nach setzen dieses Steins diagonal eine Siegmöglichkeit für den Gegner entsteht
                 // -> Bad Move
-                double eval;
-                if (PlayerStrategies.CheckBadMove(gameControl, pMove))
-                    eval = -1;
+                if (!PlayerStrategies.CheckBadMove(gameControl, pMove))
+                    scoreMove(pMove, 0);
                 else
                 {
-                    eval = scoreMove(pMove, 0);
+                    gameControl.Set(pMove);
+                    saveGameFieldString(2);
+                    gameControl.UnSet(pMove);
                 }
 
                 // Save result
