@@ -9,6 +9,7 @@ namespace ConnectFour.Console
     {
         private static void Main(string[] args)
         {
+            args = new[] {"memory", "7"}; // TODO delete!
             //int[,] oldGameField = new int[7, 6];
             //oldGameField[3, 5] = 2;
             //oldGameField[4, 5] = 1;

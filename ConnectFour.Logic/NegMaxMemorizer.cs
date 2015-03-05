@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
@@ -13,44 +14,44 @@ namespace ConnectFour.Logic
 
         private string movePath = "moves.txt";
 
+        private List<string> moveStrings = new List<string>(); 
+
         public NegMaxMemorizer(int max_deep)
         {
-            gameControl = new GameControl(this);
+            gameControl = new GameControl(this){CurrentPlayer = 1};
             MAX_DEEP = max_deep;
         }
 
         public void ResetDatabase()
         {
-            if(File.Exists(movePath))
+            if (File.Exists(movePath))
                 File.Delete(movePath);
-            File.Create(movePath);
 
             Point[] possibleMoves = gameControl.GetPossibleMoves();
 
-            if (!PlayerStrategies.CatchMovePlayed(gameControl))
-            {
-                globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
-                for (int i = 0; i < 7; i++)
+            globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
+            int i = 4; // beginne in der Mitte
+            //for (int i = 0; i < 7; i++)
+            //{
+                //if (!MoveCheck.PointValid(possibleMoves[i])) continue;
+
+                Point pMove = new Point(possibleMoves[i].X, possibleMoves[i].Y);
+                // Prüfen, ob nach setzen dieses Steins diagonal eine Siegmöglichkeit für den Gegner entsteht
+                // -> Bad Move
+                double eval;
+                if (PlayerStrategies.CheckBadMove(gameControl, pMove))
+                    eval = -1;
+                else
                 {
-                    if (!MoveCheck.PointValid(possibleMoves[i])) continue;
-
-                    Point pMove = new Point(possibleMoves[i].X, possibleMoves[i].Y);
-                    // Prüfen, ob nach setzen dieses Steins diagonal eine Siegmöglichkeit für den Gegner entsteht
-                    // -> Bad Move
-                    double eval;
-                    if (PlayerStrategies.CheckBadMove(gameControl, pMove))
-                        eval = -1;
-                    else
-                    {
-                        eval = scoreMove(pMove, 0);
-                    }
-
-                    // Save result
-
-                    gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
+                    eval = scoreMove(pMove, 0);
                 }
 
-            }
+                // Save result
+
+                gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
+            //}
+
+            writeGameFieldStrings();
         }
 
         private double scoreMove(Point pMove, int deep)
@@ -134,9 +135,17 @@ namespace ConnectFour.Logic
                     sGameField += gameControl.Get(x, y);
                 }
             }
-            
-            StreamWriter writer = new StreamWriter(movePath);
-            writer.WriteLine(sGameField);
+
+            moveStrings.Add(sGameField);
+        }
+
+        private void writeGameFieldStrings()
+        {
+            StreamWriter writer = File.AppendText(movePath);
+            foreach (string s in moveStrings)
+            {
+                writer.WriteLine(s);
+            }
             writer.Close();
         }
 
