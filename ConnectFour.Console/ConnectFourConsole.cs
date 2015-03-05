@@ -1,6 +1,7 @@
 ﻿using System;
 using ConnectFour.FischertechnikInterface;
 using ConnectFour.Logic;
+using ConnectFour.Logic.Strategy;
 using ConnectFour.Vision;
 
 namespace ConnectFour.Console

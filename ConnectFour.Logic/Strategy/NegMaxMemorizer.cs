@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
-namespace ConnectFour.Logic
+namespace ConnectFour.Logic.Strategy
 {
     public class NegMaxMemorizer : IOutput
     {

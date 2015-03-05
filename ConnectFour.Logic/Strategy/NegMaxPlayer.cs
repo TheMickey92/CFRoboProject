@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using ConnectFour.Logic.CatchMoves;
 
-namespace ConnectFour.Logic
+namespace ConnectFour.Logic.Strategy
 {
     public class NegMaxPlayer : IPlayer
     {
