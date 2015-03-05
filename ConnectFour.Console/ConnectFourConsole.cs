@@ -1,5 +1,6 @@
 ﻿using System;
 using ConnectFour.FischertechnikInterface;
+using ConnectFour.Logic;
 using ConnectFour.Vision;
 
 namespace ConnectFour.Console
@@ -34,7 +35,7 @@ namespace ConnectFour.Console
 
             if (args.Length > 0)
             {
-                if(args[0] != "vision" && args[0] != "robot")
+                if(args[0] != "vision" && args[0] != "robot" && args[0] != "memory")
                 {
                     handleLogicCall(args);
                 }
@@ -48,8 +49,30 @@ namespace ConnectFour.Console
                 {
                     handleVisionCall();
                 }
+
+                if (args[0] == "memory")
+                {
+                    handleMemoryResetCall(args);
+                }
             }
             System.Console.WriteLine("-1 -1 -1 -3");
+            Environment.Exit(0);
+        }
+
+        private static void handleMemoryResetCall(string[] args)
+        {
+            int deep = 0;
+            try
+            {
+                deep = Convert.ToInt32(args[1]);
+            }
+            catch (Exception)
+            {
+                System.Console.WriteLine("-1");
+                Environment.Exit(0);
+            }
+            NegMaxMemorizer negMaxMemorizer = new NegMaxMemorizer(deep);
+            negMaxMemorizer.ResetDatabase();
             Environment.Exit(0);
         }
 

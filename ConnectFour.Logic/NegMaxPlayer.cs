@@ -21,7 +21,7 @@ namespace ConnectFour.Logic
         {
             Point[] possibleMoves = gameControl.GetPossibleMoves();
 
-            if(!catchMovePlayed())
+            if(!PlayerStrategies.CatchMovePlayed(gameControl))
             {
                 Point move = new Point();
                 globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
@@ -34,14 +34,13 @@ namespace ConnectFour.Logic
                     // Prüfen, ob nach setzen dieses Steins diagonal eine Siegmöglichkeit für den Gegner entsteht
                     // -> Bad Move
                     double eval;
-                    if (checkBadMove(pMove))
+                    if (PlayerStrategies.CheckBadMove(gameControl, pMove))
                         eval = -1;
                     else
                     {
                         eval = scoreMove(pMove, 0);
                     }
-
-
+                    
                     if (eval > alpha)
                     {
                         alpha = eval;
@@ -53,50 +52,6 @@ namespace ConnectFour.Logic
 
                 gameControl.Move(move);
             }
-        }
-
-        private bool catchMovePlayed()
-        {
-            Point winPointOpponent = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
-            Point winPointCurrentPlayer = gameControl.GetWinPoint(gameControl.CurrentPlayer);
-            Point catchRowTrick = gameControl.CatchRowTrick();
-            Point useRowtrick = gameControl.UseRowTrick();
-
-            if (MoveCheck.PointValid(winPointCurrentPlayer))
-            {
-                gameControl.Move(winPointCurrentPlayer);
-            }
-            else if (MoveCheck.PointValid(winPointOpponent))
-            {
-                gameControl.Move(winPointOpponent);
-            }
-            else if (MoveCheck.PointValid(catchRowTrick))
-            {
-                gameControl.Move(catchRowTrick);
-            }
-            else if (MoveCheck.PointValid(useRowtrick))
-            {
-                gameControl.Move(useRowtrick);
-            }
-            else
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool checkBadMove(Point move)
-        {
-            bool bad = false;
-            gameControl.Set(move);
-            Point opponentWinPoint = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
-            if (opponentWinPoint.X == move.X && opponentWinPoint.Y == move.Y - 1)
-                bad = true;
-
-            gameControl.UnSet(move);
-
-            return bad;
         }
 
         private double scoreMove(Point pMove, int deep)
@@ -116,7 +71,7 @@ namespace ConnectFour.Logic
             if (globalCurrentPlayerBuffer == 1 && win2 || globalCurrentPlayerBuffer == 2 && win1)
                 return -1;
 
-            int catched = catchMoves();
+            int catched = PlayerStrategies.CatchMoves(gameControl);
             if (catched != -2)
                 return catched;
 
@@ -145,25 +100,5 @@ namespace ConnectFour.Logic
             return alpha;
         }
 
-        private int catchMoves()
-        {
-            // Prüfen, ob Row Trick möglich ist. Wenn ja, dann ist Sieg schon sicher
-            Point rowTrick = RowTrick.UseRowTrick(gameControl.CurrentPlayer, gameControl.GetGamefield());
-            if (MoveCheck.PointValid(rowTrick))
-                return 1;
-
-            Point winPoint = WinPoint.GetWinPoint(gameControl.CurrentPlayer, gameControl.GetGamefield());
-            Point winPointOpponent = WinPoint.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1, gameControl.GetGamefield());
-
-            // Wenn aktueller Spieler 3 in einer Reihe hat, der Gegner aber nicht, dann ist Sieg ebenfalls bereits sicher
-            if (MoveCheck.PointValid(winPoint) && !MoveCheck.PointValid(winPointOpponent))
-                return 1;
-
-            // Wenn Gegner 3 in einer Reihe, aktueller Spieler aber nicht, dann schon verloren
-            if (!MoveCheck.PointValid(winPoint) && MoveCheck.PointValid(winPointOpponent))
-                return -1;
-
-            return -2;
-        }
     }
 }
