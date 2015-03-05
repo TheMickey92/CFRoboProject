@@ -17,39 +17,14 @@ namespace ConnectFour.Logic
             random = new Random();
         }
 
-        private bool firstMove(Point[] possibleMoves)
-        {
-            bool first = true;
-            foreach (Point point in possibleMoves)
-            {
-                if (point.Y != 5)
-                    first = false;
-            }
-
-            return first;
-        }
-
-        private bool secondMove(Point[] possibleMoves, ref Point move)
-        {
-            int count = 0;
-            foreach (Point point in possibleMoves)
-            {
-                if (point.Y != 5)
-                {
-                    count++;
-                    move = new Point(point.X, point.Y);
-                }
-            }
-
-            return count == 1;
-        }
+        
 
         public void Turn()
         {
             Point[] possibleMoves = gameControl.GetPossibleMoves();
 
             // Wenn erster Zug, dann direkt in der Mitte spielen
-            if (firstMove(possibleMoves))
+            if (PlayerStrategies.FirstMove(possibleMoves))
             {
                 gameControl.Move(4, 5);
                 return;
@@ -57,7 +32,7 @@ namespace ConnectFour.Logic
 
             // Wenn zweiter Zug, dann direkt auf den bereits gespielten
             Point possibleSecondMove = new Point();
-            if (secondMove(possibleMoves, ref possibleSecondMove))
+            if (PlayerStrategies.SecondMove(possibleMoves, ref possibleSecondMove))
             {
                 gameControl.Move(possibleSecondMove);
                 return;

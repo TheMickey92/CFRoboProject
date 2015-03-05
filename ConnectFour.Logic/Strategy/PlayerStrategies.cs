@@ -69,5 +69,32 @@ namespace ConnectFour.Logic
 
             return -2;
         }
+
+        public static bool FirstMove(Point[] possibleMoves)
+        {
+            bool first = true;
+            foreach (Point point in possibleMoves)
+            {
+                if (point.Y != 5)
+                    first = false;
+            }
+
+            return first;
+        }
+
+        public static bool SecondMove(Point[] possibleMoves, ref Point move)
+        {
+            int count = 0;
+            foreach (Point point in possibleMoves)
+            {
+                if (point.Y != 5)
+                {
+                    count++;
+                    move = new Point(point.X, point.Y);
+                }
+            }
+
+            return count == 1;
+        }
     }
 }

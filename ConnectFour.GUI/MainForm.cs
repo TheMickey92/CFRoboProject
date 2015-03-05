@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using ConnectFour.Logic;
+using ConnectFour.Logic.Strategy;
 
 namespace ConnectFour
 {

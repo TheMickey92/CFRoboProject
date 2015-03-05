@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using ConnectFour.Logic;
+using ConnectFour.Logic.Strategy;
 
 namespace ConnectFour.Console
 {
