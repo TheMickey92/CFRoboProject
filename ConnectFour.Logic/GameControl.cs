@@ -271,5 +271,19 @@ namespace ConnectFour.Logic
         {
             return RowTrick.UseRowTrick(CurrentPlayer, gamefield);
         }
+
+        public string GamefieldToString()
+        {
+            string sGameField = "";
+
+            for (int y = 0; y < 6; y++)
+            {
+                for (int x = 0; x < 7; x++)
+                {
+                    sGameField += Get(x, y);
+                }
+            }
+            return sGameField;
+        }
     }
 }

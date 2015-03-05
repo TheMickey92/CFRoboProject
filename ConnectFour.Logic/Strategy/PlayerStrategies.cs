@@ -91,10 +91,37 @@ namespace ConnectFour.Logic.Strategy
                 {
                     count++;
                     move = new Point(point.X, point.Y);
+
+                    if (point.Y < 4)
+                    {
+                        count++;
+                    }
                 }
             }
 
             return count == 1;
+        }
+
+        public static bool PlayFixedFirstOrSecondMove(GameControl gameControl)
+        {
+            Point[] possibleMoves = gameControl.GetPossibleMoves();
+
+            // Wenn erster Zug, dann direkt in der Mitte spielen
+            if (FirstMove(possibleMoves))
+            {
+                gameControl.Move(4, 5);
+                return true;
+            }
+
+            // Wenn zweiter Zug, dann direkt auf den bereits gespielten
+            Point possibleSecondMove = new Point();
+            if (SecondMove(possibleMoves, ref possibleSecondMove))
+            {
+                gameControl.Move(possibleSecondMove);
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -16,31 +16,22 @@ namespace ConnectFour.Logic.Strategy
             random = new Random();
         }
 
-        
 
+        
         public void Turn()
         {
+            if (PlayerStrategies.PlayFixedFirstOrSecondMove(gameControl)) return;
+
             Point[] possibleMoves = gameControl.GetPossibleMoves();
-
-            // Wenn erster Zug, dann direkt in der Mitte spielen
-            if (PlayerStrategies.FirstMove(possibleMoves))
-            {
-                gameControl.Move(4, 5);
-                return;
-            }
-
-            // Wenn zweiter Zug, dann direkt auf den bereits gespielten
-            Point possibleSecondMove = new Point();
-            if (PlayerStrategies.SecondMove(possibleMoves, ref possibleSecondMove))
-            {
-                gameControl.Move(possibleSecondMove);
-                return;
-            }
 
             if(!PlayerStrategies.CatchMovePlayed(gameControl))
             {
                 Point move = new Point();
                 globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
+
+                MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
+                if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) return;
+
                 double alpha = double.MinValue;
                 for (int i = 0; i < 7; i++)
                 {
@@ -115,6 +106,5 @@ namespace ConnectFour.Logic.Strategy
             gameControl.SwapPlayer();
             return alpha;
         }
-
     }
 }

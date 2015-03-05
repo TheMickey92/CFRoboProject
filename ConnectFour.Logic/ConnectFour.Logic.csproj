@@ -46,6 +46,7 @@
     <Compile Include="GameControl.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IOutput.cs" />
+    <Compile Include="Strategy\MemorizedMoveMaker.cs" />
     <Compile Include="Strategy\NegMaxMemorizer.cs" />
     <Compile Include="Strategy\NegMaxPlayer.cs" />
     <Compile Include="Strategy\PlayerStrategies.cs" />

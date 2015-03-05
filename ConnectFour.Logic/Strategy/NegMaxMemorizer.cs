@@ -133,19 +133,12 @@ namespace ConnectFour.Logic.Strategy
 
         private void saveGameFieldString(int winner)
         {
-            string sGameField = winner + ";";
-
-            for (int y = 0; y < 6; y++)
-            {
-                for (int x = 0; x < 7; x++)
-                {
-                    sGameField += gameControl.Get(x, y);
-                }
-            }
+            string sGameField = winner + ";" + gameControl.GamefieldToString();
 
             moveStrings.Add(sGameField);
         }
 
+        
         private void writeGameFieldStrings()
         {
             StreamWriter writer = File.AppendText(movePath);
