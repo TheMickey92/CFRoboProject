@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -15,35 +16,25 @@ namespace ConnectFour.Logic.Strategy
         {
             if (!File.Exists("moves.txt")) return false;
 
-            readWinAndDrawLines(gameControl.CurrentPlayer);
-
             string currentSituation = gameControl.GamefieldToString();
 
+            readWinAndDrawLines(gameControl.CurrentPlayer, currentSituation);
+            
             calculateDifferences(currentSituation);
 
-            // eliminate 0 values, da diese Variante ja derzeit gespielt ist 
-            // und alle Varianten, für welche schon zu viele Züge gespielt wurden
+            // eliminate 0 values, da diese Variante ja derzeit gespielt ist
             eliminateZeroes();
-            removeTooShortOnes(numberOfMoves(currentSituation) + 1);
 
-            // TODO
+            // Jetzt sollten nur noch die Spielzüge in der Liste sein, die überhaupt in Frage kommen
 
-            return false;
-        }
 
-        private int getSmallestDifferenceCountIndex(List<int> list)
-        {
-            int min = 1000;
-            foreach (int diff in list)
+            while (wins.Count > 0) // probiere alle Züge durch
             {
-                if (diff < 1000)
-                    min = diff;
+                int index = getSmallestIndex(winDifferences);
+
             }
 
-            if (min == 1000)
-                return -1;
-
-            return min;
+            return false;
         }
 
         private void calculateDifferences(string currentSituation)
@@ -58,30 +49,7 @@ namespace ConnectFour.Logic.Strategy
                 winDifferences.Add(difference(currentSituation, win));
             }
 
-            
-        }
 
-        private void removeTooShortOnes(int minLength)
-        {
-            // Draws
-            for (int i = 0; i < draws.Count; i++)
-            {
-                string s = draws[i];
-                if (numberOfMoves(s) >= minLength) continue;
-                draws.RemoveAt(i);
-                drawDifferences.RemoveAt(i);
-                i--;
-            }
-            
-            // Wins
-            for (int i = 0; i < wins.Count; i++)
-            {
-                string s = wins[i];
-                if (numberOfMoves(s) >= minLength) continue;
-                wins.RemoveAt(i);
-                winDifferences.RemoveAt(i);
-                i--;
-            }
         }
 
         private void eliminateZeroes()
@@ -107,7 +75,7 @@ namespace ConnectFour.Logic.Strategy
             }
         }
 
-        private void readWinAndDrawLines(int player)
+        private void readWinAndDrawLines(int player, string currentSituation)
         {
             StreamReader reader = new StreamReader("moves.txt");
             string line = "";
@@ -115,18 +83,25 @@ namespace ConnectFour.Logic.Strategy
             {
                 if (line[0] == '0')
                 {
-                    line = line.Remove(0, 2);
-                    draws.Add(line);
+                    addLineToList(draws, currentSituation, line);
                 }
 
                 if(line[0] == '1' && player == 1 || line[0] == '2' && player == 2)
                 {
-                    line = line.Remove(0, 2);
-                    wins.Add(line);
+                    addLineToList(wins, currentSituation, line);
                 }
             }
             
             reader.Close();
+        }
+
+        private void addLineToList(List<string> list, string currentSituation, string line)
+        {
+            line = line.Remove(0, 2);
+            bool correctNumber = numberOfMoves(line) >= numberOfMoves(currentSituation) + 1;
+            bool possibleMove = possible(currentSituation, line);
+            if (correctNumber && possibleMove) // Bestimmte Anzahl von Spielzügen muss bereits vorhanden sein, außerdem müssen bisherige Züge vorhanden sein
+                list.Add(line);
         }
 
         private int difference(string s1, string s2)
@@ -139,6 +114,53 @@ namespace ConnectFour.Logic.Strategy
         private int numberOfMoves(string moves)
         {
             return moves.Count(t => t != '0');
+        }
+
+        private bool possible(string currentSituation, string s)
+        {
+            if (currentSituation.Length != s.Length) return false;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (currentSituation[i] == '1' && s[i] != '1')
+                    return false;
+                if (currentSituation[i] == '2' && s[i] != '2')
+                    return false;
+            }
+
+            return true;
+        }
+
+        private List<Point> getNeededMoves(string currentSituation, string line, int currentPlayer)
+        {
+            char player = currentPlayer == 1 ? '1' : '2';
+            List<Point> moves = new List<Point>();
+            for (int i = 0; i < currentSituation.Length; i++)
+            {
+                if (currentSituation[i] == '0' && line[i] == player)
+                {
+                    Point move = new Point(i%7, i/7); // Aus Stringkette die Position zurückrechnen
+                    moves.Add(move);
+                }
+            }
+
+            return moves;
+        }
+
+        private int getSmallestIndex(List<int> list)
+        {
+            int min = 1000;
+            int index = -1;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] < min)
+                {
+                    min = list[i];
+                    index = i;
+                }
+            }
+
+            return index;
         }
     }
 }

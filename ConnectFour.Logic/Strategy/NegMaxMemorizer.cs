@@ -53,8 +53,6 @@ namespace ConnectFour.Logic.Strategy
                     gameControl.UnSet(pMove);
                 }
 
-                // Save result
-
                 gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
             }
 
