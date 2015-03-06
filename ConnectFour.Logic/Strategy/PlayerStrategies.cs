@@ -109,7 +109,7 @@ namespace ConnectFour.Logic.Strategy
             // Wenn erster Zug, dann direkt in der Mitte spielen
             if (FirstMove(possibleMoves))
             {
-                gameControl.Move(4, 5);
+                gameControl.Move(3, 5);
                 return true;
             }
 

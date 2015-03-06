@@ -8,19 +8,18 @@ namespace ConnectFour.Logic.Strategy
         private GameControl gameControl;
         private Random random;
         private int globalCurrentPlayerBuffer;
-        private const int MAX_DEEP = 5;
+        private const int MAX_DEEP = 4;
 
         public NegMaxPlayer(GameControl gameControl)
         {
             this.gameControl = gameControl;
             random = new Random();
         }
-
-
         
         public void Turn()
         {
-            if (PlayerStrategies.PlayFixedFirstOrSecondMove(gameControl)) return;
+            if (PlayerStrategies.PlayFixedFirstOrSecondMove(gameControl)) 
+                return;
 
             Point[] possibleMoves = gameControl.GetPossibleMoves();
 
@@ -30,7 +29,8 @@ namespace ConnectFour.Logic.Strategy
                 globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
 
                 MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
-                if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) return;
+                if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) 
+                    return;
 
                 double alpha = double.MinValue;
                 for (int i = 0; i < 7; i++)

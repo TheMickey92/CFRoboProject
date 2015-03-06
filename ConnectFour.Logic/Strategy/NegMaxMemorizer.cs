@@ -28,9 +28,9 @@ namespace ConnectFour.Logic.Strategy
                 File.Delete(movePath);
 
             gameControl.CurrentPlayer = 1;
-            gameControl.Set(4, 5);
+            gameControl.Set(3, 5);
             gameControl.CurrentPlayer = 2;
-            gameControl.Set(4, 4);
+            gameControl.Set(3, 4);
             gameControl.CurrentPlayer = 1;
 
             Point[] possibleMoves = gameControl.GetPossibleMoves();
