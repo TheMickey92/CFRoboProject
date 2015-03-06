@@ -30,9 +30,38 @@ namespace ConnectFour.Logic.Strategy
 
             while (wins.Count > 0) // probiere alle Züge durch
             {
-                int index = getSmallestIndex(winDifferences);
-
+                if (tryToPlayMove(gameControl, currentSituation, wins, winDifferences))
+                {
+                    return true;
+                }
             }
+
+            while (draws.Count > 0) // wenn kein Sieg möglich, ist vielleicht ein Unentschieden rauszuholen
+            {
+                if (tryToPlayMove(gameControl, currentSituation, draws, drawDifferences))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool tryToPlayMove(GameControl gameControl, string currentSituation, List<string> sList, List<int> differences)
+        {
+            int index = getSmallestIndex(differences);
+            List<Point> neededMoves = getNeededMoves(currentSituation, sList[index], gameControl.CurrentPlayer);
+            foreach (Point move in neededMoves)
+            {
+                if (MoveCheck.IsMoveAllowed(move, gameControl.GetGamefield()))
+                {
+                    gameControl.Move(move);
+                    return true;
+                }
+            }
+
+            sList.RemoveAt(index);
+            differences.RemoveAt(index);
 
             return false;
         }
