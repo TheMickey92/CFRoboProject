@@ -12,6 +12,7 @@ namespace ConnectFour.Logic.Strategy
         private int globalCurrentPlayerBuffer;
         private int MAX_DEEP;
 
+        private StreamWriter writer;
         private string movePath = "moves.txt";
 
         private List<string> moveStrings = new List<string>(); 
@@ -26,6 +27,8 @@ namespace ConnectFour.Logic.Strategy
         {
             if (File.Exists(movePath))
                 File.Delete(movePath);
+
+            writer = File.AppendText(movePath);
 
             gameControl.CurrentPlayer = 1;
             gameControl.Set(3, 5);
@@ -56,7 +59,7 @@ namespace ConnectFour.Logic.Strategy
                 gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
             }
 
-            writeGameFieldStrings();
+            writer.Close();
         }
 
         private double scoreMove(Point pMove, int deep)
@@ -133,18 +136,7 @@ namespace ConnectFour.Logic.Strategy
         {
             string sGameField = winner + ";" + gameControl.GamefieldToString();
 
-            moveStrings.Add(sGameField);
-        }
-
-        
-        private void writeGameFieldStrings()
-        {
-            StreamWriter writer = File.AppendText(movePath);
-            foreach (string s in moveStrings)
-            {
-                writer.WriteLine(s);
-            }
-            writer.Close();
+            writer.WriteLine(sGameField);
         }
 
         public void SetField(Point field, int currentPlayer)
