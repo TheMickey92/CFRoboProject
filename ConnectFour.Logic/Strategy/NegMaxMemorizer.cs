@@ -12,8 +12,10 @@ namespace ConnectFour.Logic.Strategy
         private int globalCurrentPlayerBuffer;
         private int MAX_DEEP;
 
-        private StreamWriter writer;
-        private string movePath = "moves.txt";
+        private StreamWriter writer1;
+        private StreamWriter writer2;
+        private string movePath1 = "moves1.txt";
+        private string movePath2 = "moves2.txt";
 
         private List<string> moveStrings = new List<string>(); 
 
@@ -23,12 +25,20 @@ namespace ConnectFour.Logic.Strategy
             MAX_DEEP = max_deep;
         }
 
+        private StreamWriter initializeStreamWriter(string path)
+        {
+            if (File.Exists(path))
+                File.Delete(path);
+
+            StreamWriter streamWriter = File.AppendText(path);
+
+            return streamWriter;
+        }
+
         public void ResetDatabase()
         {
-            if (File.Exists(movePath))
-                File.Delete(movePath);
-
-            writer = File.AppendText(movePath);
+            writer1 = initializeStreamWriter(movePath1);
+            writer2 = initializeStreamWriter(movePath2);
 
             gameControl.CurrentPlayer = 1;
             gameControl.Set(3, 5);
@@ -59,7 +69,8 @@ namespace ConnectFour.Logic.Strategy
                 gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
             }
 
-            writer.Close();
+            writer1.Close();
+            writer2.Close();
         }
 
         private double scoreMove(Point pMove, int deep)
@@ -136,21 +147,36 @@ namespace ConnectFour.Logic.Strategy
         {
             string sGameField = winner + ";" + gameControl.GamefieldToString();
 
-            writer.WriteLine(sGameField);
+            switch (winner)
+            {
+                case 1: // Schreibe alle Siege von 1 in Datei move1
+                    writer1.WriteLine(sGameField);
+                    break;
+                case 2: // Schreibe alle Siege von 2 in Datei move2
+                    writer2.WriteLine(sGameField);
+                    break;
+                case 0: // Schreibe alle unentschiedenene Spiele in beide Dateien für eine schnellere Auswertung später
+                    writer1.WriteLine(sGameField);
+                    writer2.WriteLine(sGameField);
+                    break;
+            }
         }
 
         public void SetField(Point field, int currentPlayer)
         {
+            // Hier darf der Code nicht vorbeikommen.
             throw new NotImplementedException();
         }
 
         public void Win(Point field, int currentPlayer)
         {
+            // Hier darf der Code nicht vorbeikommen.
             throw new NotImplementedException();
         }
 
         public void Draw(Point field, int currentPlayer)
         {
+            // Hier darf der Code nicht vorbeikommen.
             throw new NotImplementedException();
         }
     }

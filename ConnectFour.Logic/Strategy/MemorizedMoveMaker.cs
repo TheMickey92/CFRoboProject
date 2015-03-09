@@ -14,11 +14,13 @@ namespace ConnectFour.Logic.Strategy
 
         public bool MemorizedMovePlayed(GameControl gameControl)
         {
-            if (!File.Exists("moves.txt")) return false;
+            int currentPlayer = gameControl.CurrentPlayer;
+
+            if (!File.Exists("moves"+ currentPlayer + ".txt")) return false;
 
             string currentSituation = gameControl.GamefieldToString();
-
-            readWinAndDrawLines(gameControl.CurrentPlayer, currentSituation);
+            
+            readWinAndDrawLines(currentPlayer, currentSituation);
             
             calculateDifferences(currentSituation);
 
@@ -106,7 +108,7 @@ namespace ConnectFour.Logic.Strategy
 
         private void readWinAndDrawLines(int player, string currentSituation)
         {
-            StreamReader reader = new StreamReader("moves.txt");
+            StreamReader reader = new StreamReader("moves" + player + ".txt");
             string line = "";
             while ((line = reader.ReadLine()) != null)
             {
