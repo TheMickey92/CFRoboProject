@@ -41,7 +41,8 @@ namespace ConnectFour.Logic.Strategy
             bool bad = false;
             gameControl.Set(move);
             Point opponentWinPoint = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
-            if (opponentWinPoint.X == move.X && opponentWinPoint.Y == move.Y - 1)
+            Point opponentRowTrick = gameControl.CatchRowTrick();
+            if (opponentWinPoint.X != -1 || opponentRowTrick.X != -1)
                 bad = true;
 
             gameControl.UnSet(move);
