@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using ConnectFour.Logic;
 using ConnectFour.Logic.Strategy;
@@ -99,8 +100,18 @@ namespace ConnectFour
 
         private void newGame()
         {
+            ChoosePlayer dialog = new ChoosePlayer();
+            dialog.ShowDialog();
+            if(!dialog.WasOkClicked) Environment.Exit(0);
+            int player = dialog.Player;
+
             ClearField();
-            gameControl.NewGame(this, new NegMaxPlayer(gameControl));
+            if(player == 1)
+                gameControl.NewGame(this, new NegMaxPlayer(gameControl));
+            else if (player == 2)
+                gameControl.NewGame(new NegMaxPlayer(gameControl), this);
+            else
+                gameControl.NewGame(new NegMaxPlayer(gameControl), new NegMaxPlayer(gameControl));
         }
     }
 }

@@ -23,3 +23,4 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.GUI\obj\Debug\ConnectFour.GUI.csproj.GenerateResource.Cache
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.GUI\obj\Debug\CFGUI.exe
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.GUI\obj\Debug\CFGUI.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.GUI\obj\Debug\ConnectFour.ChoosePlayer.resources
