@@ -67,9 +67,10 @@ namespace ConnectFour.Logic
             
 
             // Sieg überprüfen
-            if (CheckWin() == CurrentPlayer)
+            CheckWinResult checkWinResult = CheckWin();
+            if (checkWinResult.Winner == CurrentPlayer)
             {
-                output.Win(p, CurrentPlayer);
+                output.Win(p, CurrentPlayer, checkWinResult.Points);
                 return;
             }
 
@@ -161,45 +162,72 @@ namespace ConnectFour.Logic
             return gamefield[p.X, p.Y] != 0;
         }
 
-        public int CheckWin()
+        public CheckWinResult CheckWin()
         {
+            List<Point> points;
             for (int y = yPos; y < 6; y++)
             {
                 for (int x = 0; x < 7; x++)
                 {
-                        if (x < 4)
+                    if (x < 4)
+                    {
+                        // Check X-Axis
+                        points = new List<Point>()
                         {
-                            // Check X-Axis
-                            if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y), new Point(x + 2, y), new Point(x + 3, y) }, CurrentPlayer, gamefield))
-                                return CurrentPlayer;
+                            new Point(x, y),
+                            new Point(x + 1, y),
+                            new Point(x + 2, y),
+                            new Point(x + 3, y)
+                        };
+                        if (MoveCheck.IsSetByPlayer(points, CurrentPlayer, gamefield))
+                            return new CheckWinResult(CurrentPlayer, points);
 
-                            if (y > 2)
+                        if (y > 2)
+                        {
+                            // Check diagonal upwards
+                            points = new List<Point>()
                             {
-                                // Check diagonal upwards
-                                if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y - 1), new Point(x + 2, y - 2), new Point(x + 3, y - 3) }, CurrentPlayer, gamefield))
-                                    return CurrentPlayer;
-                            }
-
-                            if (y < 3)
-                            {
-                                // Check diagonal downwoards
-                                if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x + 1, y + 1), new Point(x + 2, y + 2), new Point(x + 3, y + 3) }, CurrentPlayer, gamefield))
-                                    return CurrentPlayer;
-                            }
+                                new Point(x, y),
+                                new Point(x + 1, y - 1),
+                                new Point(x + 2, y - 2),
+                                new Point(x + 3, y - 3)
+                            };
+                            if (MoveCheck.IsSetByPlayer(points, CurrentPlayer, gamefield))
+                                return new CheckWinResult(CurrentPlayer, points);
                         }
 
                         if (y < 3)
                         {
-                            // Check Y-Axis
-                            if (MoveCheck.IsSetByPlayer(new List<Point>() { new Point(x, y), new Point(x, y + 1), new Point(x, y + 2), new Point(x, y + 3) }, CurrentPlayer, gamefield))
-                                return CurrentPlayer;
+                            // Check diagonal downwoards
+                            points = new List<Point>()
+                            {
+                                new Point(x, y),
+                                new Point(x + 1, y + 1),
+                                new Point(x + 2, y + 2),
+                                new Point(x + 3, y + 3)
+                            };
+                            if (MoveCheck.IsSetByPlayer(points, CurrentPlayer, gamefield))
+                                return new CheckWinResult(CurrentPlayer, points);
                         }
                     }
+
+                    if (y < 3)
+                    {
+                        // Check Y-Axis
+                        points = new List<Point>()
+                        {
+                            new Point(x, y),
+                            new Point(x, y + 1),
+                            new Point(x, y + 2),
+                            new Point(x, y + 3)
+                        };
+                        if (MoveCheck.IsSetByPlayer(points, CurrentPlayer, gamefield))
+                            return new CheckWinResult(CurrentPlayer, points);
+                    }
                 }
-            
+            }
 
-
-            return 0;
+            return new CheckWinResult(0);
         }
 
 

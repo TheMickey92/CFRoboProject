@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using ConnectFour.Logic;
 using ConnectFour.Logic.Strategy;
@@ -66,9 +67,16 @@ namespace ConnectFour.Console
             Environment.Exit(0);
         }
 
-        public void Win(Point field, int currentPlayer)
+        public void Win(Point field, int currentPlayer, List<Point> points)
         {
-            System.Console.WriteLine(field.X + " " + field.Y + " " + currentPlayer + " " + currentPlayer);
+            string output = field.X + " " + field.Y + " " + currentPlayer + " " + currentPlayer;
+
+            foreach (Point p in points)
+            {
+                output += " " + p.X + " " + p.Y;
+            }
+
+            System.Console.WriteLine(output);
             Environment.Exit(0);
         }
 

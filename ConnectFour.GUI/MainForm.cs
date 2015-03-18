@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ConnectFour.Logic;
@@ -58,6 +59,7 @@ namespace ConnectFour
                 for (int x = 0; x < 7; x++)
                 {
                     buttons[x, y].BackColor = Color.Gray;
+                    buttons[x, y].Text = "";
                 }
             }
             buttonLocking(false);
@@ -84,9 +86,15 @@ namespace ConnectFour
             buttonLocking(true);
         }
 
-        public void Win(Point point, int player)
+        public void Win(Point point, int player, List<Point> points)
         {
             SetField(point, player);
+
+            foreach (Point p in points)
+            {
+                buttons[p.X, p.Y].Text = "X";
+            }
+
             MessageBox.Show("Spieler " + player + " hat gewonnen!", "Win!");
             newGame();
         }

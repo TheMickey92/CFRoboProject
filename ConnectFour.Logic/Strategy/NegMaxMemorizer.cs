@@ -76,9 +76,10 @@ namespace ConnectFour.Logic.Strategy
         private double scoreMove(Point pMove, int deep)
         {
             Point move = new Point(pMove.X, pMove.Y);
-            int win = gameControl.CheckWin();
-            bool win1 = win == 1;
-            bool win2 = win == 2;
+            CheckWinResult checkWinResult = gameControl.CheckWin();
+            int winner = checkWinResult.Winner;
+            bool win1 = winner == 1;
+            bool win2 = winner == 2;
 
 
             if (gameControl.ValidMovesCount == 0 && !win1 && !win2) // DRAW!
@@ -168,7 +169,7 @@ namespace ConnectFour.Logic.Strategy
             throw new NotImplementedException();
         }
 
-        public void Win(Point field, int currentPlayer)
+        public void Win(Point field, int currentPlayer, List<Point> points)
         {
             // Hier darf der Code nicht vorbeikommen.
             throw new NotImplementedException();
