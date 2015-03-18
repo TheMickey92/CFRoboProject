@@ -10,17 +10,28 @@ namespace ConnectFour.Console
         private static void Main(string[] args)
         {
             //int[,] oldGameField = new int[7, 6];
+            //oldGameField[0, 5] = 1;
+            //oldGameField[1, 5] = 1;
+            //oldGameField[2, 5] = 2;
             //oldGameField[3, 5] = 2;
-            //oldGameField[4, 5] = 1;
-            //oldGameField[3, 4] = 2;
-            //oldGameField[4, 4] = 1;
+            //oldGameField[4, 5] = 2;
+            //oldGameField[0, 4] = 2;
+            //oldGameField[2, 4] = 1;
+            //oldGameField[3, 4] = 1;
+            //oldGameField[3, 3] = 1;
+            
 
             //int[,] newGameField = new int[7, 6];
+            //newGameField[0, 5] = 1;
+            //newGameField[1, 5] = 1;
+            //newGameField[2, 5] = 2;
             //newGameField[3, 5] = 2;
-            //newGameField[4, 5] = 1;
-            //newGameField[3, 4] = 2;
-            //newGameField[4, 4] = 1;
-            //newGameField[4, 3] = 1;
+            //newGameField[4, 5] = 2;
+            //newGameField[0, 4] = 2;
+            //newGameField[2, 4] = 1;
+            //newGameField[3, 4] = 1;
+            //newGameField[3, 3] = 1;
+            //newGameField[5, 5] = 2;
 
             //string jsonOldGameField = InputHandling.GetJsonFrom2DArray(oldGameField);
             //string jsonNewGameField = InputHandling.GetJsonFrom2DArray(newGameField);
