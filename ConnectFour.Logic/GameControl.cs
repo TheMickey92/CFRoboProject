@@ -8,7 +8,7 @@ namespace ConnectFour.Logic
     {
         private IOutput output;
         private IPlayer[] player = new IPlayer[2];
-        private Gamestatus gamestatus;
+        private GameStatus gamestatus;
         
         public GameControl(IOutput output)
         {
@@ -18,7 +18,7 @@ namespace ConnectFour.Logic
 
         private void newGameData()
         {
-            gamestatus = new Gamestatus(this);
+            gamestatus = new GameStatus(this);
         }
 
         public void NewGame(IPlayer player1, IPlayer player2)
@@ -77,15 +77,12 @@ namespace ConnectFour.Logic
             player[gamestatus.CurrentPlayer - 1].Turn();
         }
         
-
         public int[,] GetGamefield()
         {
             int[,] clone = (int[,]) gamestatus.Field.Clone();
             return clone;
         }
-
         
-
         public CheckWinResult CheckWin()
         {
             List<Point> points;
@@ -154,12 +151,10 @@ namespace ConnectFour.Logic
             return new CheckWinResult(0);
         }
 
-
         public Point GetWinPoint(int player)
         {
             return WinPoint.GetWinPoint(player, gamestatus.Field);
         }
-        
         
         public Point[] GetPossibleMoves()
         {
@@ -175,8 +170,6 @@ namespace ConnectFour.Logic
             }
             gamestatus.CurrentPlayer = 1;
         }
-
-        
 
         public void SetGameFieldAndPlayer(int[,] newGameField, int player)
         {

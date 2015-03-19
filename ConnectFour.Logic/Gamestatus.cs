@@ -2,7 +2,7 @@
 
 namespace ConnectFour.Logic
 {
-    class Gamestatus
+    class GameStatus
     {
         public int[,] Field { get; set; }
 
@@ -16,7 +16,7 @@ namespace ConnectFour.Logic
 
         private GameControl gameControl;
 
-        public Gamestatus(GameControl gameControl)
+        public GameStatus(GameControl gameControl)
         {
             this.gameControl = gameControl;
             Field = new int[7, 6];

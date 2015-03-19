@@ -43,7 +43,7 @@
     <Compile Include="CatchMoves\RowTrick.cs" />
     <Compile Include="CatchMoves\WinPoint.cs" />
     <Compile Include="CheckWinResult.cs" />
-    <Compile Include="Gamestatus.cs" />
+    <Compile Include="GameStatus.cs" />
     <Compile Include="MoveCheck.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="IPlayer.cs" />
