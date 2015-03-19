@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.FischertechnikI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.Vision", "ConnectFour.Vision\ConnectFour.Vision.csproj", "{4BD3448A-AA03-4EA4-8FCD-E59113152235}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectFour.Testing", "ConnectFour.Testing\ConnectFour.Testing.csproj", "{50AEC311-E429-44D3-BA7D-375090A67D8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4BD3448A-AA03-4EA4-8FCD-E59113152235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BD3448A-AA03-4EA4-8FCD-E59113152235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BD3448A-AA03-4EA4-8FCD-E59113152235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50AEC311-E429-44D3-BA7D-375090A67D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50AEC311-E429-44D3-BA7D-375090A67D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50AEC311-E429-44D3-BA7D-375090A67D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50AEC311-E429-44D3-BA7D-375090A67D8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

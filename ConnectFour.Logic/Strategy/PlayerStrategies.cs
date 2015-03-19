@@ -7,8 +7,8 @@ namespace ConnectFour.Logic.Strategy
     {
         public static bool CatchMovePlayed(GameControl gameControl)
         {
-            Point winPointOpponent = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
-            Point winPointCurrentPlayer = gameControl.GetWinPoint(gameControl.CurrentPlayer);
+            Point winPointOpponent = gameControl.GetWinPoint(gameControl.GetCurrentPlayer() == 1 ? 2 : 1);
+            Point winPointCurrentPlayer = gameControl.GetWinPoint(gameControl.GetCurrentPlayer());
             Point catchRowTrick = gameControl.CatchRowTrick();
             Point useRowtrick = gameControl.UseRowTrick();
 
@@ -40,7 +40,7 @@ namespace ConnectFour.Logic.Strategy
         {
             bool bad = false;
             gameControl.Set(move);
-            Point opponentWinPoint = gameControl.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1);
+            Point opponentWinPoint = gameControl.GetWinPoint(gameControl.GetCurrentPlayer() == 1 ? 2 : 1);
             Point opponentRowTrick = gameControl.CatchRowTrick();
             if (opponentWinPoint.X != -1 || opponentRowTrick.X != -1)
                 bad = true;
@@ -53,12 +53,12 @@ namespace ConnectFour.Logic.Strategy
         public static int CatchMoves(GameControl gameControl)
         {
             // Prüfen, ob Row Trick möglich ist. Wenn ja, dann ist Sieg schon sicher
-            Point rowTrick = RowTrick.UseRowTrick(gameControl.CurrentPlayer, gameControl.GetGamefield());
+            Point rowTrick = RowTrick.UseRowTrick(gameControl.GetCurrentPlayer(), gameControl.GetGamefield());
             if (MoveCheck.PointValid(rowTrick))
                 return 1;
 
-            Point winPoint = WinPoint.GetWinPoint(gameControl.CurrentPlayer, gameControl.GetGamefield());
-            Point winPointOpponent = WinPoint.GetWinPoint(gameControl.CurrentPlayer == 1 ? 2 : 1, gameControl.GetGamefield());
+            Point winPoint = WinPoint.GetWinPoint(gameControl.GetCurrentPlayer(), gameControl.GetGamefield());
+            Point winPointOpponent = WinPoint.GetWinPoint(gameControl.GetCurrentPlayer() == 1 ? 2 : 1, gameControl.GetGamefield());
 
             // Wenn aktueller Spieler 3 in einer Reihe hat, der Gegner aber nicht, dann ist Sieg ebenfalls bereits sicher
             if (MoveCheck.PointValid(winPoint) && !MoveCheck.PointValid(winPointOpponent))

@@ -9,3 +9,4 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\bin\Debug\CFLogic.pdb
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\obj\Debug\CFLogic.dll
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\obj\Debug\CFLogic.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Logic\obj\Debug\ConnectFour.Logic.csprojResolveAssemblyReference.cache

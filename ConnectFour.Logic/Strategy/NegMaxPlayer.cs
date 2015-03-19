@@ -26,7 +26,7 @@ namespace ConnectFour.Logic.Strategy
             if(!PlayerStrategies.CatchMovePlayed(gameControl))
             {
                 Point move = new Point();
-                globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
+                globalCurrentPlayerBuffer = gameControl.GetCurrentPlayer();
 
                 MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
                 if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) 
@@ -54,7 +54,7 @@ namespace ConnectFour.Logic.Strategy
                         move = pMove;
                     }
 
-                    gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
+                    gameControl.SetCurrentPlayer(globalCurrentPlayerBuffer);
                 }
 
                 gameControl.Move(move);
@@ -70,7 +70,7 @@ namespace ConnectFour.Logic.Strategy
             bool win2 = winner == 2;
 
             
-            if (gameControl.ValidMovesCount == 0 && !win1 && ! win2) // DRAW!
+            if (gameControl.GetValidMovesCount() == 0 && !win1 && ! win2) // DRAW!
                 return 0;
 
             if (globalCurrentPlayerBuffer == 1 && win1 || globalCurrentPlayerBuffer == 2 && win2)

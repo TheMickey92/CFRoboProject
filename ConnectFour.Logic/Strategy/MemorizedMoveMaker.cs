@@ -14,7 +14,7 @@ namespace ConnectFour.Logic.Strategy
 
         public bool MemorizedMovePlayed(GameControl gameControl)
         {
-            int currentPlayer = gameControl.CurrentPlayer;
+            int currentPlayer = gameControl.GetCurrentPlayer();
 
             if (!File.Exists("moves"+ currentPlayer + ".txt")) return false;
 
@@ -52,7 +52,7 @@ namespace ConnectFour.Logic.Strategy
         private bool tryToPlayMove(GameControl gameControl, string currentSituation, List<string> sList, List<int> differences)
         {
             int index = getSmallestIndex(differences);
-            List<Point> neededMoves = getNeededMoves(currentSituation, sList[index], gameControl.CurrentPlayer);
+            List<Point> neededMoves = getNeededMoves(currentSituation, sList[index], gameControl.GetCurrentPlayer());
             foreach (Point move in neededMoves)
             {
                 if (MoveCheck.IsMoveAllowed(move, gameControl.GetGamefield()))

@@ -40,15 +40,15 @@ namespace ConnectFour.Logic.Strategy
             writer1 = initializeStreamWriter(movePath1);
             writer2 = initializeStreamWriter(movePath2);
 
-            gameControl.CurrentPlayer = 1;
+            gameControl.SetCurrentPlayer(1);
             gameControl.Set(3, 5);
-            gameControl.CurrentPlayer = 2;
+            gameControl.SetCurrentPlayer(2);
             gameControl.Set(3, 4);
-            gameControl.CurrentPlayer = 1;
+            gameControl.SetCurrentPlayer(1);
 
             Point[] possibleMoves = gameControl.GetPossibleMoves();
             
-            globalCurrentPlayerBuffer = gameControl.CurrentPlayer;
+            globalCurrentPlayerBuffer = gameControl.GetCurrentPlayer();
             
             for (int i = 0; i < 7; i++)
             {
@@ -66,7 +66,7 @@ namespace ConnectFour.Logic.Strategy
                     gameControl.UnSet(pMove);
                 }
 
-                gameControl.CurrentPlayer = globalCurrentPlayerBuffer;
+                gameControl.SetCurrentPlayer(globalCurrentPlayerBuffer);
             }
 
             writer1.Close();
@@ -82,7 +82,7 @@ namespace ConnectFour.Logic.Strategy
             bool win2 = winner == 2;
 
 
-            if (gameControl.ValidMovesCount == 0 && !win1 && !win2) // DRAW!
+            if (gameControl.GetValidMovesCount() == 0 && !win1 && !win2) // DRAW!
             {
                 saveGameFieldString(0);
                 return 0;
