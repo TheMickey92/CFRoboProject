@@ -59,6 +59,12 @@
     <Folder Include="TFLogic\" />
     <Folder Include="TFVision\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConnectFour.Console\ConnectFour.Console.csproj">
+      <Project>{119CDDF2-EB98-4447-B95B-71C8269EABF6}</Project>
+      <Name>ConnectFour.Console</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace ConnectFour.Logic.Strategy
 {
@@ -31,6 +33,19 @@ namespace ConnectFour.Logic.Strategy
                 MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
                 if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) 
                     return;
+
+                // wenn nur noch eine Möglichkeit übrig ist, dann diese spielen
+                if (oneMoveLeft(possibleMoves))
+                {
+                    Point lastPossibleMove = new Point(-1, -1);
+                    foreach (Point possibleMove in possibleMoves.Where(MoveCheck.PointValid))
+                    {
+                        lastPossibleMove = possibleMove;
+                    }
+
+                    gameControl.Move(lastPossibleMove);
+                    return;
+                }
 
                 double alpha = double.MinValue;
                 for (int i = 0; i < 7; i++)
@@ -106,6 +121,18 @@ namespace ConnectFour.Logic.Strategy
             gameControl.UnSet(move);
             gameControl.SwapPlayer();
             return alpha;
+        }
+
+        private bool oneMoveLeft(Point[] possibleMoves)
+        {
+            int count = 0;
+            foreach (Point possibleMove in possibleMoves)
+            {
+                if (!MoveCheck.PointValid(possibleMove))
+                    count++;
+            }
+
+            return count == 6;
         }
     }
 }

@@ -11,27 +11,102 @@ namespace ConnectFour.Console
         {
             //int[,] oldGameField = new int[7, 6];
             //oldGameField[0, 5] = 1;
-            //oldGameField[1, 5] = 1;
-            //oldGameField[2, 5] = 2;
+            //oldGameField[1, 5] = 2;
+            //oldGameField[2, 5] = 1;
             //oldGameField[3, 5] = 2;
             //oldGameField[4, 5] = 2;
-            //oldGameField[0, 4] = 2;
-            //oldGameField[2, 4] = 1;
+            //oldGameField[5, 5] = 2;
+            //oldGameField[6, 5] = 1;
+
+            //oldGameField[0, 4] = 1;
+            //oldGameField[1, 4] = 1;
+            //oldGameField[2, 4] = 2;
             //oldGameField[3, 4] = 1;
-            //oldGameField[3, 3] = 1;
+            //oldGameField[4, 4] = 2;
+            //oldGameField[5, 4] = 2;
+            //oldGameField[6, 4] = 1;
+
+            //oldGameField[0, 3] = 2;
+            //oldGameField[1, 3] = 1;
+            //oldGameField[2, 3] = 1;
+            //oldGameField[3, 3] = 2;
+            //oldGameField[4, 3] = 2;
+            //oldGameField[5, 3] = 1;
+            //oldGameField[6, 3] = 1;
+
+            //oldGameField[0, 2] = 1;
+            //oldGameField[1, 2] = 2;
+            //oldGameField[2, 2] = 1;
+            //oldGameField[3, 2] = 2;
+            //oldGameField[4, 2] = 1;
+            //oldGameField[5, 2] = 2;
+            //oldGameField[6, 2] = 2;
+
+            //oldGameField[0, 1] = 2;
+            //oldGameField[1, 1] = 2;
+            //oldGameField[2, 1] = 1;
+            //oldGameField[3, 1] = 2;
+            //oldGameField[4, 1] = 2;
+            //oldGameField[5, 1] = 2;
+            //oldGameField[6, 1] = 1;
+            
+            //oldGameField[0, 0] = 0;
+            //oldGameField[1, 0] = 0;
+            //oldGameField[2, 0] = 2;
+            //oldGameField[3, 0] = 1;
+            //oldGameField[4, 0] = 2;
+            //oldGameField[5, 0] = 1;
+            //oldGameField[6, 0] = 1;
 
 
             //int[,] newGameField = new int[7, 6];
             //newGameField[0, 5] = 1;
-            //newGameField[1, 5] = 1;
-            //newGameField[2, 5] = 2;
+            //newGameField[1, 5] = 2;
+            //newGameField[2, 5] = 1;
             //newGameField[3, 5] = 2;
             //newGameField[4, 5] = 2;
-            //newGameField[0, 4] = 2;
-            //newGameField[2, 4] = 1;
-            //newGameField[3, 4] = 1;
-            //newGameField[3, 3] = 1;
             //newGameField[5, 5] = 2;
+            //newGameField[6, 5] = 1;
+
+            //newGameField[0, 4] = 1;
+            //newGameField[1, 4] = 1;
+            //newGameField[2, 4] = 2;
+            //newGameField[3, 4] = 1;
+            //newGameField[4, 4] = 2;
+            //newGameField[5, 4] = 2;
+            //newGameField[6, 4] = 1;
+
+            //newGameField[0, 3] = 2;
+            //newGameField[1, 3] = 1;
+            //newGameField[2, 3] = 1;
+            //newGameField[3, 3] = 2;
+            //newGameField[4, 3] = 2;
+            //newGameField[5, 3] = 1;
+            //newGameField[6, 3] = 1;
+
+            //newGameField[0, 2] = 1;
+            //newGameField[1, 2] = 2;
+            //newGameField[2, 2] = 1;
+            //newGameField[3, 2] = 2;
+            //newGameField[4, 2] = 1;
+            //newGameField[5, 2] = 2;
+            //newGameField[6, 2] = 2;
+
+            //newGameField[0, 1] = 2;
+            //newGameField[1, 1] = 2;
+            //newGameField[2, 1] = 1;
+            //newGameField[3, 1] = 2;
+            //newGameField[4, 1] = 2;
+            //newGameField[5, 1] = 2;
+            //newGameField[6, 1] = 1;
+
+            //newGameField[0, 0] = 1;
+            //newGameField[1, 0] = 0;
+            //newGameField[2, 0] = 2;
+            //newGameField[3, 0] = 1;
+            //newGameField[4, 0] = 2;
+            //newGameField[5, 0] = 1;
+            //newGameField[6, 0] = 1;
 
             //string jsonOldGameField = InputHandling.GetJsonFrom2DArray(oldGameField);
             //string jsonNewGameField = InputHandling.GetJsonFrom2DArray(newGameField);
