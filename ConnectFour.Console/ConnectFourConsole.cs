@@ -173,16 +173,40 @@ namespace ConnectFour.Console
 
         private static void handleRobotCall(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length != 2 || args.Length != 3)
             {
                 System.Console.WriteLine("-1");
                 Environment.Exit(0);
             }
+            
+            RobotControl robotControl;
+            if (args.Length == 3)
+                robotControl = new RobotControl(args[2]);
+            else // wenn keine IP übergeben wurde, dann wird Standard USB IP genutzt
+                robotControl = new RobotControl("192.168.7.2");
 
-            RobotControl robotControl = new RobotControl();
-            bool success = robotControl.PlayMove(Convert.ToInt32(args[1]));
+
+            RoboticsErrorCode errorCode = robotControl.PlayMove(Convert.ToInt32(args[1]));
             // Wenn der Spielzug erfolgreich ausgeführt wurde, gib 1 zurück, ansosnten -1
-            System.Console.WriteLine(success ? "1" : "-1");
+
+            switch (errorCode)
+            {
+                case RoboticsErrorCode.OK:
+                    System.Console.WriteLine("1");
+                    break;
+                case RoboticsErrorCode.NOT_CONNECTED:
+                    System.Console.WriteLine("-2");
+                    break;
+                case RoboticsErrorCode.TIMEOUT:
+                    System.Console.WriteLine("-3");
+                    break;
+                case RoboticsErrorCode.UNDEFINED:
+                    System.Console.WriteLine("-1");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             Environment.Exit(0);
         }
 
