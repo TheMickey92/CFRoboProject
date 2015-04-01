@@ -6,3 +6,4 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.csproj.GenerateResource.Cache
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\SystemControlGUI.exe
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\SystemControlGUI.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.MainForm.resources
