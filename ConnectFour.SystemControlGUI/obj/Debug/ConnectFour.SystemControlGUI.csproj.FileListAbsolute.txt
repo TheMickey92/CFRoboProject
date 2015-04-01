@@ -1,0 +1,8 @@
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\SystemControlGUI.exe.config
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\SystemControlGUI.exe
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\SystemControlGUI.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.csprojResolveAssemblyReference.cache
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.Properties.Resources.resources
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.csproj.GenerateResource.Cache
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\SystemControlGUI.exe
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\SystemControlGUI.pdb
