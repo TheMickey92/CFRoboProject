@@ -64,7 +64,7 @@ namespace ConnectFour.SystemControlGUI
                 return;
             }
 
-            // TODO: Gewinner/Unentschieden anzeigen, SecondChance bei vermeintluchem Schummeln 
+            // TODO: Gewinner/Unentschieden anzeigen, SecondChance bei vermeintlichem Schummeln 
 
             processRobotics(nextMoveX, ip);
 
