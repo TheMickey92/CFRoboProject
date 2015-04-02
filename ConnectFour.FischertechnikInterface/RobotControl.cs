@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Threading;
 using MCD.Robots;
 
 namespace ConnectFour.FischertechnikInterface
@@ -7,7 +7,8 @@ namespace ConnectFour.FischertechnikInterface
     public class RobotControl
     {
         private FTConnectionInterface ftci;
-        private const int lastFieldIncValue = 1300;
+        private const int lastFieldIncValue = 4000;
+        private const int dropMax = 2000;
 
 
         public RobotControl(string ip)
@@ -19,9 +20,28 @@ namespace ConnectFour.FischertechnikInterface
         public RoboticsErrorCode PlayMove(int x)
         {
             RoboticsErrorCode errorCode;
+
+
+            //while (true)
+            //{
+                // CONNECT
+                if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
+
+                //InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
+                //for (int i = 0; i < 8; i++)
+                //{
+                //    bool b = iip.I(i);
+                //    Console.WriteLine("b" + i + ": " + (b ? 1 : 0));
+                //}
+
+                // DISCONNECT
+                //iip = ftci.GetInterfaceInformation();
+                ftci.Disconnect();
+
+            //    Thread.Sleep(1000);
+            //}
+
             
-            // CONNECT
-            if(!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
 
             // GO HOME
             errorCode = goHome();
@@ -39,49 +59,144 @@ namespace ConnectFour.FischertechnikInterface
                 return errorCode;
 
 
-            // DISCONNECT
-            ftci.Disconnect();
+            
             return RoboticsErrorCode.OK;
         }
 
         private RoboticsErrorCode goHome()
         {
-            InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            long elapsedMilliseconds = 0;
-            while (!iip.I(0) && !(elapsedMilliseconds > 40000)) // Solange bis Schalter erreicht wurde oder Zeit abgelaufen ist
-            {
-                iip = ftci.SendInterfacePacket(MotorMovement.LEFT, MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP);
-                elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
-            }
-
-            iip = ftci.GetInterfaceInformation();
-            if (iip.I(0))
-            {
-                ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
-                    true, true, true, true); // RESET der Incrementalgeber und Motoren
-                return RoboticsErrorCode.OK;
-            }
-            return RoboticsErrorCode.TIMEOUT;
-        }
-
-        private RoboticsErrorCode play(int x)
-        {
-            int neededC = (int) Math.Round(lastFieldIncValue/7.0*x, MidpointRounding.AwayFromZero);
+            // CONNECT
+            if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
 
             InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
 
-            // Fahre zu Position
-            while (iip.C(0) < neededC) // Solange Position noch nicht erreicht wurde
+            for (int i = 0; i < 50; i++)
             {
                 iip = ftci.SendInterfacePacket(MotorMovement.RIGHT, MotorMovement.STOP, MotorMovement.STOP,
                     MotorMovement.STOP);
             }
 
-            // Lass Stein fallen
+            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
+                MotorMovement.STOP,
+                true, true, true, true); // RESET der Incrementalgeber und Motoren
 
+            iip = ftci.GetInterfaceInformation();
+
+            while (iip.C(2) == 0) // Solange bis Schalter erreicht wurde oder Zeit abgelaufen ist
+            {
+                iip = ftci.SendInterfacePacket(MotorMovement.LEFT, MotorMovement.STOP, MotorMovement.STOP,
+                    MotorMovement.STOP);
+                //iip = ftci.GetInterfaceInformation();
+                //Console.WriteLine(iip.C(3));
+            }
+
+            //iip = ftci.GetInterfaceInformation();
+            //while (!iip.I(1) && !(elapsedMilliseconds > 90000))
+            //{
+            //    iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.LEFT, MotorMovement.STOP, MotorMovement.STOP);
+            //    elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+            //}
+
+            iip = ftci.GetInterfaceInformation();
+
+            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
+                MotorMovement.STOP,
+                true, true, true, true); // RESET der Incrementalgeber und Motoren
+            iip = ftci.GetInterfaceInformation();
+
+            // DISCONNECT
+            ftci.Disconnect();
+            return RoboticsErrorCode.OK;
+        }
+
+        private RoboticsErrorCode play(int x)
+        {
+            // CONNECT
+            if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
+
+            int offset = 100;
+            int i = lastFieldIncValue - offset;
+            int neededC = (int) Math.Round(i/7.0*x, MidpointRounding.AwayFromZero) + offset;
+
+            InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
+            int c = iip.C(0);
+
+            // Fahre zu Position
+            while (c < neededC) // Solange Position noch nicht erreicht wurde
+            {
+                iip = ftci.SendInterfacePacket(MotorMovement.RIGHT, MotorMovement.STOP, MotorMovement.STOP,
+                    MotorMovement.STOP);
+
+                //iip = ftci.GetInterfaceInformation();
+                c = iip.C(0);
+            }
+
+            // DISCONNECT
+            ftci.Disconnect();
+
+            // Lass Stein fallen
+            return drop();
+
+        }
+
+        private RoboticsErrorCode drop()
+        {
+            // CONNECT
+            if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
+
+            InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
+            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
+                MotorMovement.STOP,
+                true, true, true, true); // RESET der Incrementalgeber und Motoren
+
+
+            for (int i = 0; i < 50; i++)
+            {
+                iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.RIGHT, MotorMovement.STOP,
+                    MotorMovement.STOP);
+            }
+
+
+
+            iip = ftci.GetInterfaceInformation();
+
+            while (iip.C(3) == 0)
+            {
+                iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.LEFT, MotorMovement.STOP,
+                    MotorMovement.STOP);
+            }
+
+            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
+                MotorMovement.STOP,
+                true, true, true, true); // RESET der Incrementalgeber und Motoren
+
+
+            iip = ftci.GetInterfaceInformation();
+            int c = iip.C(1);
+            while (c < dropMax)
+            {
+                iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.RIGHT, MotorMovement.STOP,
+                    MotorMovement.STOP);
+                c = iip.C(1);
+            }
+
+
+            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
+                MotorMovement.STOP,
+                true, true, true, true); // RESET der Incrementalgeber und Motoren
+
+            //iip = ftci.GetInterfaceInformation();
+
+            //while (iip.C(3) == 0)
+            //{
+            //    iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.LEFT, MotorMovement.STOP,
+            //        MotorMovement.STOP);
+            //}
+
+            Thread.Sleep(500);
+
+            // DISCONNECT
+            ftci.Disconnect();
 
             return RoboticsErrorCode.OK;
         }

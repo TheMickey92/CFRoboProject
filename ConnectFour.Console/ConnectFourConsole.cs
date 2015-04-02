@@ -119,6 +119,8 @@ namespace ConnectFour.Console
             //    jsonNewGameField
             //};
 
+            //args = new[] { "robot", "2", "192.168.8.2" };
+
             if (args.Length > 0)
             {
                 if(args[0] != "vision" && args[0] != "robot" && args[0] != "memory")

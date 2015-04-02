@@ -12,7 +12,7 @@
 
         public bool I(int i)
         {
-            return Packet[4 + i*2] == 0x01;
+            return (Packet[4 + i * 2] == 0x01) || (Packet[5 + i * 2] == 0x01);
         }
 
         public int C(int i)
