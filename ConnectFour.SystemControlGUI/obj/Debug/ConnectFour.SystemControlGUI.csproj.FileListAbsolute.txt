@@ -7,3 +7,12 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\SystemControlGUI.exe
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\SystemControlGUI.pdb
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.MainForm.resources
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\CFConsole.exe
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\CFLogic.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\Vision.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\FischertechnikInterface.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\CFConsole.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\CFLogic.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\Vision.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\FischertechnikInterface.pdb

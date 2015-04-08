@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using ConnectFour.Console;
 
 namespace ConnectFour.SystemControlGUI
 {
@@ -11,6 +12,7 @@ namespace ConnectFour.SystemControlGUI
         private string lastJSONStatus;
         private Process console;
         private string ip = "";
+        FieldView fieldView = new FieldView();
 
         public MainForm()
         {
@@ -43,12 +45,15 @@ namespace ConnectFour.SystemControlGUI
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            mainTimer.Interval = 5000;
-            mainTimer.Enabled = true;
             lastJSONStatus =
                 "[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]";
 
             ip = String.IsNullOrWhiteSpace(txtIP.Text) ? "" : txtIP.Text;
+
+            mainTimer.Interval = 5000;
+            mainTimer.Enabled = true;
+
+            mainTimer_Tick(sender, e);
         }
 
         private void mainTimer_Tick(object sender, EventArgs e)
@@ -57,16 +62,19 @@ namespace ConnectFour.SystemControlGUI
 
             string newJSONStatus = processVision();
 
-            string nextMoveX = processNextMove(lastJSONStatus, newJSONStatus);
-            if (nextMoveX == "-1")
-            {
-                MessageBox.Show("GAME OVER!");
-                return;
-            }
+            int[,] field = InputHandling.Get2DArrayFromJSON(newJSONStatus);
+            fieldView.SetField(field);
 
-            // TODO: Gewinner/Unentschieden anzeigen, SecondChance bei vermeintlichem Schummeln 
+            //string nextMoveX = processNextMove(lastJSONStatus, newJSONStatus);
+            //if (nextMoveX == "-1")
+            //{
+            //    MessageBox.Show("GAME OVER!");
+            //    return;
+            //}
 
-            processRobotics(nextMoveX, ip);
+            //// TODO: Gewinner/Unentschieden anzeigen, SecondChance bei vermeintlichem Schummeln 
+
+            //processRobotics(nextMoveX, ip);
 
 
             mainTimer.Enabled = true;
@@ -103,6 +111,11 @@ namespace ConnectFour.SystemControlGUI
             string output = console.StandardOutput.ReadToEnd();
             console.WaitForExit();
             return output;
+        }
+
+        private void btnShow_Click(object sender, EventArgs e)
+        {
+            fieldView.Show();
         }
 
         

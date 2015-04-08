@@ -35,6 +35,7 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.txtIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnShow = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // mainTimer
@@ -77,17 +78,28 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "IP:";
             // 
+            // btnShow
+            // 
+            this.btnShow.Location = new System.Drawing.Point(192, 12);
+            this.btnShow.Name = "btnShow";
+            this.btnShow.Size = new System.Drawing.Size(84, 46);
+            this.btnShow.TabIndex = 4;
+            this.btnShow.Text = "show field";
+            this.btnShow.UseVisualStyleBackColor = true;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(201, 92);
+            this.ClientSize = new System.Drawing.Size(283, 92);
+            this.Controls.Add(this.btnShow);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtIP);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "System Control GUI";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,6 +113,7 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.TextBox txtIP;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnShow;
     }
 }
 

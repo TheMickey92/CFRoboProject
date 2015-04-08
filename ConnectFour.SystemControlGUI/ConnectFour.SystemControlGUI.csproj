@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FieldView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FieldView.Designer.cs">
+      <DependentUpon>FieldView.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConnectFour.Console\ConnectFour.Console.csproj">
+      <Project>{119CDDF2-EB98-4447-B95B-71C8269EABF6}</Project>
+      <Name>ConnectFour.Console</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
