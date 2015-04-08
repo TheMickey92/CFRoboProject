@@ -4,7 +4,7 @@ namespace ConnectFour.Vision
 {
     public class VisionControl
     {
-        private string path = @"C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\testpicture.jpg"; // TODO anstatt über Pfad, macht die Kamera ein Bild
+        private string path = @"C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\testpicture2.jpg"; // TODO anstatt über Pfad, macht die Kamera ein Bild
         public int[,] Process()
         {
             Bitmap bitmap = new Bitmap(path);
@@ -19,7 +19,7 @@ namespace ConnectFour.Vision
                 {
                     Point position = fieldMap.GetPosition(x, y);
                     Color color = bitmap.GetPixel(position.X, position.Y);
-                    if (color.R > 150 && color.G > 150 && color.B < 100) // gelb
+                    if (color.R > 200 && color.G > 200) // gelb
                         gamefield[x, y] = 1;
                     else if(color.R > 200) // rot
                         gamefield[x, y] = 2;

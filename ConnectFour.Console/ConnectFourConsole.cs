@@ -119,7 +119,7 @@ namespace ConnectFour.Console
             //    jsonNewGameField
             //};
 
-            //args = new[] { "robot", "2", "192.168.8.2" };
+            args = new[] { "vision" };
 
             if (args.Length > 0)
             {

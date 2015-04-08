@@ -16,3 +16,4 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\CFLogic.pdb
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\Vision.pdb
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\FischertechnikInterface.pdb
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.FieldView.resources
