@@ -120,7 +120,7 @@ namespace ConnectFour.Console
             //    jsonNewGameField
             //};
 
-            //args = new[] { "vision" };
+            //args = new[] { "vision", "view", "0"};
 
             if (args.Length > 0)
             {
@@ -170,9 +170,23 @@ namespace ConnectFour.Console
             int device = 0;
             VisionControl visionControl = new VisionControl();
 
-            if (args.Length > 2)
+            if (args.Length > 3)
             {
                 System.Console.Out.WriteLine("-1");
+                Environment.Exit(0);
+            }
+
+            if (args.Length == 3)
+            {
+                if (args[1] != "view")
+                {
+                    System.Console.Out.WriteLine("-1");
+                    Environment.Exit(0);
+                }
+
+                int viewDevice = Convert.ToInt32(args[2]);
+                visionControl.ShowCurrentView(viewDevice);
+                System.Console.Out.WriteLine("1");
                 Environment.Exit(0);
             }
 
@@ -184,7 +198,7 @@ namespace ConnectFour.Console
                     string sDevices = "";
                     foreach (FilterInfo filterInfo in devices)
                     {
-                        sDevices = filterInfo.Name + "; ";
+                        sDevices += filterInfo.Name + "; ";
                     }
                     System.Console.Out.WriteLine(sDevices);
                     Environment.Exit(0);
