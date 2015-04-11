@@ -1,11 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using AForge.Video.DirectShow;
 
 namespace ConnectFour.Vision
 {
     public class VisionControl
     {
         private string path = @"C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\testpicture2.jpg"; // TODO anstatt über Pfad, macht die Kamera ein Bild
-        public int[,] Process()
+        public int[,] Process(int device)
         {
             Bitmap bitmap = new Bitmap(path);
             FieldMap fieldMap = new FieldMap();
@@ -27,6 +29,11 @@ namespace ConnectFour.Vision
             }
 
             return gamefield;
+        }
+
+        public FilterInfoCollection GetDevices()
+        {
+            return new FilterInfoCollection(FilterCategory.VideoInputDevice);
         }
     }
 }

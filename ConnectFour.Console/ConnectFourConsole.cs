@@ -1,4 +1,5 @@
 ﻿using System;
+using AForge.Video.DirectShow;
 using ConnectFour.FischertechnikInterface;
 using ConnectFour.Logic.Strategy;
 using ConnectFour.Vision;
@@ -119,7 +120,7 @@ namespace ConnectFour.Console
             //    jsonNewGameField
             //};
 
-            args = new[] { "vision" };
+            //args = new[] { "vision" };
 
             if (args.Length > 0)
             {
@@ -135,7 +136,7 @@ namespace ConnectFour.Console
 
                 if (args[0] == "vision")
                 {
-                    handleVisionCall();
+                    handleVisionCall(args);
                 }
 
                 if (args[0] == "memory")
@@ -164,10 +165,44 @@ namespace ConnectFour.Console
             Environment.Exit(0);
         }
 
-        private static void handleVisionCall()
+        private static void handleVisionCall(string[] args)
         {
+            int device = 0;
             VisionControl visionControl = new VisionControl();
-            int[,] gamefield = visionControl.Process();
+
+            if (args.Length > 2)
+            {
+                System.Console.Out.WriteLine("-1");
+                Environment.Exit(0);
+            }
+
+            if (args.Length == 2)
+            {
+                if (args[1] == "devices")
+                {
+                    FilterInfoCollection devices = visionControl.GetDevices();
+                    string sDevices = "";
+                    foreach (FilterInfo filterInfo in devices)
+                    {
+                        sDevices = filterInfo.Name + "; ";
+                    }
+                    System.Console.Out.WriteLine(sDevices);
+                    Environment.Exit(0);
+                }
+
+                try
+                {
+                    device = Convert.ToInt32(args[1]);
+                }
+                catch (Exception)
+                {
+                    System.Console.Out.WriteLine("-1");
+                    Environment.Exit(0);
+                }
+            }
+
+            
+            int[,] gamefield = visionControl.Process(device);
             string json = InputHandling.GetJsonFrom2DArray(gamefield);
             System.Console.WriteLine(json);
             Environment.Exit(0);
@@ -214,7 +249,7 @@ namespace ConnectFour.Console
 
         private static void handleLogicCall(string[] args)
         {
-            int length = (args[0] == "logic")?3:2;
+            int length = (args[0] == "logic") ? 3 : 2;
             
             if (args.Length != length)
             {
