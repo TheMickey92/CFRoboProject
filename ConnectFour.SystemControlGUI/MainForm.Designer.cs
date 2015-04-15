@@ -42,6 +42,10 @@
             // 
             this.mainTimer.Tick += new System.EventHandler(this.mainTimer_Tick);
             // 
+            // secondChanceTimer
+            // 
+            this.secondChanceTimer.Tick += new System.EventHandler(this.secondChanceTimer_Tick);
+            // 
             // btnStart
             // 
             this.btnStart.Location = new System.Drawing.Point(12, 12);

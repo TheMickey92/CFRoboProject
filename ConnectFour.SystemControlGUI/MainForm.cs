@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using ConnectFour.Console;
 
@@ -13,6 +14,8 @@ namespace ConnectFour.SystemControlGUI
         private Process console;
         private string ip = "";
         FieldView fieldView = new FieldView();
+
+        private bool cheat;
 
         public MainForm()
         {
@@ -50,6 +53,8 @@ namespace ConnectFour.SystemControlGUI
 
             ip = String.IsNullOrWhiteSpace(txtIP.Text) ? "" : txtIP.Text;
 
+            cheat = false;
+
             mainTimer.Interval = 5000;
             mainTimer.Enabled = true;
 
@@ -60,24 +65,103 @@ namespace ConnectFour.SystemControlGUI
         {
             mainTimer.Enabled = false;
 
-            string newJSONStatus = processVision();
+            // Bilderkennung
+            string newJSONStatus = imageRecognition();
+            if (newJSONStatus == "-1")
+            {
+                MessageBox.Show(
+                    "Bei der Bilderkennung ist ein Fehler aufgetreten.\n" +
+                    "Stellen Sie sicher, dass die Kamera angeschlossen ist!");
+                return;
+            }
 
-            int[,] field = InputHandling.Get2DArrayFromJSON(newJSONStatus);
-            fieldView.SetField(field);
+            // Zug berechnen
+            int state;
+            string y, player;
+            string nextMoveX = processNextMove(lastJSONStatus, newJSONStatus, out state, out y, out player);
+            if (Convert.ToInt32(nextMoveX) < 0)
+            {
+                // Fehler-Auswertung und Second-Try
+                switch (state)
+                {
+                    case 0:
+                        MessageBox.Show("UNENTSCHIEDEN!");
+                        break;
+                    case 1:
+                    case 2:
+                        MessageBox.Show("Spieler " + state + " gewinnt!");
+                        break;
+                    case -2:
+                        if (!cheat)
+                        {
+                            cheat = true;
+                            secondChance();
+                            return;
+                        }
+                        MessageBox.Show("CHEAT!");
+                        break;
+                    case -5:
+                        mainTimer.Enabled = true;
+                        return;
+                    default:
+                        MessageBox.Show("Es ist ein Fehler aufgetreten!");
+                        break;
+                }
+                return;
+            }
 
-            //string nextMoveX = processNextMove(lastJSONStatus, newJSONStatus);
-            //if (nextMoveX == "-1")
-            //{
-            //    MessageBox.Show("GAME OVER!");
-            //    return;
-            //}
+            if (cheat)
+                cheat = false;
 
-            //// TODO: Gewinner/Unentschieden anzeigen, SecondChance bei vermeintlichem Schummeln 
+            // Zug durchführen
+            if (!playMove(nextMoveX)) return;
 
-            //processRobotics(nextMoveX, ip);
-
+            // Speichern, dass Zug bereits bekannt ist.
+            safeLastJSON(newJSONStatus, nextMoveX, y, player);
 
             mainTimer.Enabled = true;
+        }
+
+        private void safeLastJSON(string newJSONStatus, string nextMoveX, string y, string player)
+        {
+            int[,] field = InputHandling.Get2DArrayFromJSON(newJSONStatus);
+            field[Convert.ToInt32(nextMoveX), Convert.ToInt32(y)] = Convert.ToInt32(player);
+            lastJSONStatus = InputHandling.GetJsonFrom2DArray(field);
+        }
+
+        private string imageRecognition()
+        {
+            string[] cameraList = getCameraList();
+            int camera = cameraList.ToList().IndexOf("HD Camera 720px");
+            if (camera == -1)
+                return "-1"; // Kamera nicht in der Liste
+
+            string newJSONStatus = processVision(camera);
+            if (newJSONStatus == "-1")
+                return "-1";
+            int[,] field = InputHandling.Get2DArrayFromJSON(newJSONStatus);
+            fieldView.SetField(field);
+            return newJSONStatus;
+        }
+
+        private string[] getCameraList()
+        {
+            console.StartInfo.Arguments = "vision devices";
+            console.Start();
+            string output = console.StandardOutput.ReadToEnd();
+            console.WaitForExit();
+            return output.Split(new[] {"; "}, StringSplitOptions.None);
+        }
+
+        private bool playMove(string nextMoveX)
+        {
+            string robotics = processRobotics(nextMoveX, ip);
+            if (robotics != "1")
+            {
+                MessageBox.Show("Robotics Error!");
+                return false;
+            }
+            return true;
         }
 
 
@@ -90,7 +174,7 @@ namespace ConnectFour.SystemControlGUI
             return output;
         }
 
-        private string processVision()
+        private string processVision(int camera)
         {
             console.StartInfo.Arguments = "vision";
             console.Start();
@@ -99,9 +183,33 @@ namespace ConnectFour.SystemControlGUI
             return output;
         }
 
-        private string processNextMove(string oldField, string newField)
+        private string processNextMove(string oldField, string newField, out int state, out string y, out string player)
         {
-            return "";
+            state = -4;
+            y = "-1";
+            player = "-1";
+
+            console.StartInfo.Arguments = oldField + " " + newField;
+            console.Start();
+            string output = console.StandardOutput.ReadToEnd();
+            console.WaitForExit();
+
+            string[] outputArray = output.Split(new[] {" "}, StringSplitOptions.None);
+
+            try
+            {
+                state = Convert.ToInt32(outputArray[3]);
+                if (state < -1)
+                    return outputArray[3];
+            }
+            catch (Exception)
+            {
+                return "-4";
+            }
+
+            y = outputArray[1];
+            player = outputArray[2] == "1" ? "2" : "1";
+            return outputArray[0];
         }
 
         private string processRobotics(string x, string ip="")
@@ -116,6 +224,18 @@ namespace ConnectFour.SystemControlGUI
         private void btnShow_Click(object sender, EventArgs e)
         {
             fieldView.Show();
+        }
+
+        private void secondChance()
+        {
+            secondChanceTimer.Interval = 2000;
+            secondChanceTimer.Start();
+        }
+
+        private void secondChanceTimer_Tick(object sender, EventArgs e)
+        {
+            secondChanceTimer.Stop();
+            mainTimer_Tick(sender ,e);
         }
 
         
