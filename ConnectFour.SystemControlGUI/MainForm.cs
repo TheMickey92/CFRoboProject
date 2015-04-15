@@ -78,18 +78,18 @@ namespace ConnectFour.SystemControlGUI
             // Zug berechnen
             int state;
             string y, player;
-            string nextMoveX = processNextMove(lastJSONStatus, newJSONStatus, out state, out y, out player);
-            if (Convert.ToInt32(nextMoveX) < 0)
+            NextMove nextMove = processNextMove(lastJSONStatus, newJSONStatus);
+            if (Convert.ToInt32(nextMove) < 0)
             {
                 // Fehler-Auswertung und Second-Try
-                switch (state)
+                switch (nextMove.State)
                 {
                     case 0:
                         MessageBox.Show("UNENTSCHIEDEN!");
                         break;
                     case 1:
                     case 2:
-                        MessageBox.Show("Spieler " + state + " gewinnt!");
+                        MessageBox.Show("Spieler " + nextMove.State + " gewinnt!");
                         break;
                     case -2:
                         if (!cheat)
@@ -114,18 +114,18 @@ namespace ConnectFour.SystemControlGUI
                 cheat = false;
 
             // Zug durchführen
-            if (!playMove(nextMoveX)) return;
+            if (!playMove(nextMove.X)) return;
 
             // Speichern, dass Zug bereits bekannt ist.
-            safeLastJSON(newJSONStatus, nextMoveX, y, player);
+            safeLastJSON(newJSONStatus, nextMove.X, nextMove.Y, nextMove.Player);
 
             mainTimer.Enabled = true;
         }
 
-        private void safeLastJSON(string newJSONStatus, string nextMoveX, string y, string player)
+        private void safeLastJSON(string newJSONStatus, int x, int y, int player)
         {
             int[,] field = InputHandling.Get2DArrayFromJSON(newJSONStatus);
-            field[Convert.ToInt32(nextMoveX), Convert.ToInt32(y)] = Convert.ToInt32(player);
+            field[x, y] = player;
             lastJSONStatus = InputHandling.GetJsonFrom2DArray(field);
         }
 
@@ -153,7 +153,7 @@ namespace ConnectFour.SystemControlGUI
             return output.Split(new[] {"; "}, StringSplitOptions.None);
         }
 
-        private bool playMove(string nextMoveX)
+        private bool playMove(int nextMoveX)
         {
             string robotics = processRobotics(nextMoveX, ip);
             if (robotics != "1")
@@ -162,16 +162,6 @@ namespace ConnectFour.SystemControlGUI
                 return false;
             }
             return true;
-        }
-
-
-        private string processConsoleTest()
-        {
-            console.StartInfo.Arguments = "";
-            console.Start();
-            string output = console.StandardOutput.ReadToEnd();
-            console.WaitForExit();
-            return output;
         }
 
         private string processVision(int camera)
@@ -183,11 +173,11 @@ namespace ConnectFour.SystemControlGUI
             return output;
         }
 
-        private string processNextMove(string oldField, string newField, out int state, out string y, out string player)
+        private NextMove processNextMove(string oldField, string newField)
         {
-            state = -4;
-            y = "-1";
-            player = "-1";
+            int state = -4;
+            int y = -1, x = -1;
+            int player = -1;
 
             console.StartInfo.Arguments = oldField + " " + newField;
             console.Start();
@@ -200,19 +190,20 @@ namespace ConnectFour.SystemControlGUI
             {
                 state = Convert.ToInt32(outputArray[3]);
                 if (state < -1)
-                    return outputArray[3];
+                    return new NextMove(-1, -1, -1 , state);
             }
             catch (Exception)
             {
-                return "-4";
+                return new NextMove(-1, -1, -1, -4);
             }
 
-            y = outputArray[1];
-            player = outputArray[2] == "1" ? "2" : "1";
-            return outputArray[0];
+            y = Convert.ToInt32(outputArray[1]);
+            player = Convert.ToInt32(outputArray[2] == "1" ? "2" : "1");
+            x= Convert.ToInt32(outputArray[0]);
+            return new NextMove(x, y, player, state);
         }
 
-        private string processRobotics(string x, string ip="")
+        private string processRobotics(int x, string ip="")
         {
             console.StartInfo.Arguments = "robot " + x + ((ip == "") ? "" : " " + ip);
             console.Start();
