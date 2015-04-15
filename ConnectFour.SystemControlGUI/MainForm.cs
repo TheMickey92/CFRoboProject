@@ -37,6 +37,7 @@ namespace ConnectFour.SystemControlGUI
             console.StartInfo.FileName = pathToConsole;
             console.StartInfo.UseShellExecute = false;
             console.StartInfo.RedirectStandardOutput = true;
+            console.StartInfo.CreateNoWindow = true;
 
         }
 
@@ -76,10 +77,8 @@ namespace ConnectFour.SystemControlGUI
             }
 
             // Zug berechnen
-            int state;
-            string y, player;
             NextMove nextMove = processNextMove(lastJSONStatus, newJSONStatus);
-            if (Convert.ToInt32(nextMove) < 0)
+            if (nextMove.State != -1)
             {
                 // Fehler-Auswertung und Second-Try
                 switch (nextMove.State)
@@ -132,7 +131,7 @@ namespace ConnectFour.SystemControlGUI
         private string imageRecognition()
         {
             string[] cameraList = getCameraList();
-            int camera = cameraList.ToList().IndexOf("HD Camera 720px");
+            int camera = cameraList.ToList().IndexOf("HD 720P Webcam");
             if (camera == -1)
                 return "-1"; // Kamera nicht in der Liste
 
@@ -175,9 +174,7 @@ namespace ConnectFour.SystemControlGUI
 
         private NextMove processNextMove(string oldField, string newField)
         {
-            int state = -4;
-            int y = -1, x = -1;
-            int player = -1;
+            int state;
 
             console.StartInfo.Arguments = oldField + " " + newField;
             console.Start();
@@ -197,9 +194,9 @@ namespace ConnectFour.SystemControlGUI
                 return new NextMove(-1, -1, -1, -4);
             }
 
-            y = Convert.ToInt32(outputArray[1]);
-            player = Convert.ToInt32(outputArray[2] == "1" ? "2" : "1");
-            x= Convert.ToInt32(outputArray[0]);
+            int y = Convert.ToInt32(outputArray[1]);
+            int player = Convert.ToInt32(outputArray[2] == "1" ? "2" : "1");
+            int x = Convert.ToInt32(outputArray[0]);
             return new NextMove(x, y, player, state);
         }
 

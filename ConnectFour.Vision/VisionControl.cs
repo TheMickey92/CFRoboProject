@@ -33,9 +33,9 @@ namespace ConnectFour.Vision
                 {
                     Point position = fieldMap.GetPosition(x, y);
                     Color color = bitmap.GetPixel(position.X, position.Y);
-                    if (color.R > 200 && color.G > 200) // gelb
+                    if (color.R > 150 && color.G > 150) // gelb
                         gamefield[x, y] = 1;
-                    else if(color.R > 200) // rot
+                    else if(color.R > 150) // rot
                         gamefield[x, y] = 2;
                 }
             }
