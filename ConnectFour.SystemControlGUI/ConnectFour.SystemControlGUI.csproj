@@ -50,6 +50,12 @@
     <Compile Include="FieldView.Designer.cs">
       <DependentUpon>FieldView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChoosePlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoosePlayer.Designer.cs">
+      <DependentUpon>ChoosePlayer.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FieldView.resx">
       <DependentUpon>FieldView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChoosePlayer.resx">
+      <DependentUpon>ChoosePlayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

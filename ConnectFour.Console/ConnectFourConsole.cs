@@ -120,7 +120,7 @@ namespace ConnectFour.Console
             //    jsonNewGameField
             //};
 
-            //args = new[] { "vision", "view", "0"};
+            //args = new[] { "robot", "3"};
 
             if (args.Length > 0)
             {

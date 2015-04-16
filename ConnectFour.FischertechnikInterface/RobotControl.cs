@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using MCD.Robots;
 
 namespace ConnectFour.FischertechnikInterface
@@ -7,9 +6,9 @@ namespace ConnectFour.FischertechnikInterface
     public class RobotControl
     {
         private FTConnectionInterface ftci;
-        private const int lastFieldIncValue = 4000;
-        private const int dropMax = 2000;
+        private const int dropMax = 2250;
 
+        private static readonly int[] fieldPositions = {5121, 4540, 3970, 3412, 2845, 2277, 1718};
 
         public RobotControl(string ip)
         {
@@ -114,9 +113,7 @@ namespace ConnectFour.FischertechnikInterface
             // CONNECT
             if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
 
-            int offset = 100;
-            int i = lastFieldIncValue - offset;
-            int neededC = (int) Math.Round(i/7.0*x, MidpointRounding.AwayFromZero) + offset;
+            int neededC = fieldPositions[x];
 
             InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
             int c = iip.C(0);
@@ -150,11 +147,11 @@ namespace ConnectFour.FischertechnikInterface
                 true, true, true, true); // RESET der Incrementalgeber und Motoren
 
 
-            for (int i = 0; i < 50; i++)
-            {
-                iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.RIGHT, MotorMovement.STOP,
-                    MotorMovement.STOP);
-            }
+            //for (int i = 0; i < 50; i++)
+            //{
+            //    iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.RIGHT, MotorMovement.STOP,
+            //        MotorMovement.STOP);
+            //}
 
 
 

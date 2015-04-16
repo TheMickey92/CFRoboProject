@@ -23,3 +23,4 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\AForge.Video.DirectShow.xml
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\AForge.Video.xml
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\bin\Debug\AForge.xml
+C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.SystemControlGUI\obj\Debug\ConnectFour.SystemControlGUI.ChoosePlayer.resources

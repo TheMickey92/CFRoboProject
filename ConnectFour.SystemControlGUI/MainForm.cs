@@ -33,12 +33,16 @@ namespace ConnectFour.SystemControlGUI
                 Environment.Exit(0);
             }
 
+            initializeProcess();
+        }
+
+        private void initializeProcess()
+        {
             console = new Process();
             console.StartInfo.FileName = pathToConsole;
             console.StartInfo.UseShellExecute = false;
             console.StartInfo.RedirectStandardOutput = true;
             console.StartInfo.CreateNoWindow = true;
-
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -56,10 +60,40 @@ namespace ConnectFour.SystemControlGUI
 
             cheat = false;
 
-            mainTimer.Interval = 5000;
-            mainTimer.Enabled = true;
+            ChoosePlayer dialog = new ChoosePlayer();
+            dialog.ShowDialog(this);
 
-            mainTimer_Tick(sender, e);
+            int player = dialog.Player;
+
+            if(player == 1)
+            {
+                mainTimer.Interval = 300;
+                mainTimer.Enabled = true;
+                mainTimer_Tick(sender, e);
+                return;
+            }
+
+            string newJSONStatus = imageRecognition();
+            if (newJSONStatus != lastJSONStatus)
+            {
+                MessageBox.Show("Bitte zuerst das Spielfeld leeren!");
+                return;
+            }
+            // Zug berechnen
+            NextMove nextMove = new NextMove(3, 5, 1, -1);
+ 
+            // Zug durchführen
+            if (!playMove(nextMove.X))
+            {
+                MessageBox.Show("Robotics Error!");
+                return;
+            }
+
+            // Speichern, dass Zug bereits bekannt ist.
+            //lastJSONStatus = newJSONStatus;
+            safeLastJSON(newJSONStatus, nextMove.X, nextMove.Y, nextMove.Player);
+            mainTimer.Interval = 300;
+            mainTimer.Enabled = true;
         }
 
         private void mainTimer_Tick(object sender, EventArgs e)
@@ -116,6 +150,7 @@ namespace ConnectFour.SystemControlGUI
             if (!playMove(nextMove.X)) return;
 
             // Speichern, dass Zug bereits bekannt ist.
+            //lastJSONStatus = newJSONStatus;
             safeLastJSON(newJSONStatus, nextMove.X, nextMove.Y, nextMove.Player);
 
             mainTimer.Enabled = true;
@@ -136,10 +171,12 @@ namespace ConnectFour.SystemControlGUI
                 return "-1"; // Kamera nicht in der Liste
 
             string newJSONStatus = processVision(camera);
+            newJSONStatus = newJSONStatus.Trim(new[] { '\r', '\n' });
             if (newJSONStatus == "-1")
                 return "-1";
             int[,] field = InputHandling.Get2DArrayFromJSON(newJSONStatus);
             fieldView.SetField(field);
+            Application.DoEvents();
             return newJSONStatus;
         }
 
@@ -155,6 +192,7 @@ namespace ConnectFour.SystemControlGUI
         private bool playMove(int nextMoveX)
         {
             string robotics = processRobotics(nextMoveX, ip);
+            robotics = robotics.Trim(new[] {'\r', '\n'});
             if (robotics != "1")
             {
                 MessageBox.Show("Robotics Error!");
@@ -165,21 +203,25 @@ namespace ConnectFour.SystemControlGUI
 
         private string processVision(int camera)
         {
+            initializeProcess();
             console.StartInfo.Arguments = "vision";
             console.Start();
             string output = console.StandardOutput.ReadToEnd();
             console.WaitForExit();
+            console.Close();
             return output;
         }
 
         private NextMove processNextMove(string oldField, string newField)
         {
+            initializeProcess();
             int state;
 
             console.StartInfo.Arguments = oldField + " " + newField;
             console.Start();
             string output = console.StandardOutput.ReadToEnd();
             console.WaitForExit();
+            console.Close();
 
             string[] outputArray = output.Split(new[] {" "}, StringSplitOptions.None);
 
@@ -202,10 +244,12 @@ namespace ConnectFour.SystemControlGUI
 
         private string processRobotics(int x, string ip="")
         {
+            initializeProcess();
             console.StartInfo.Arguments = "robot " + x + ((ip == "") ? "" : " " + ip);
             console.Start();
             string output = console.StandardOutput.ReadToEnd();
             console.WaitForExit();
+            console.Close();
             return output;
         }
 
@@ -216,7 +260,7 @@ namespace ConnectFour.SystemControlGUI
 
         private void secondChance()
         {
-            secondChanceTimer.Interval = 2000;
+            secondChanceTimer.Interval = 1500;
             secondChanceTimer.Start();
         }
 
