@@ -222,12 +222,30 @@ namespace ConnectFour.Console
             Environment.Exit(0);
         }
 
+        private static void handleRobotikLEDCall(string[] args)
+        {
+            RobotControl robotControl;
+            if (args.Length == 4)
+                robotControl = new RobotControl(args[3]);
+            else // wenn keine IP übergeben wurde, dann wird Standard USB IP genutzt
+                robotControl = new RobotControl("192.168.7.2");
+
+            RoboticsErrorCode roboticsErrorCode = robotControl.TurnOnLED(args[2]);
+            writeRoboticsErrorCode(roboticsErrorCode);
+        }
+
         private static void handleRobotCall(string[] args)
         {
             if (args.Length != 2 && args.Length != 3)
             {
                 System.Console.WriteLine("-1");
                 Environment.Exit(0);
+            }
+
+            if ((args[1] == "led" || args[1] == "LED") && (args.Length == 3 || args.Length == 4))
+            {
+                handleRobotikLEDCall(args);
+                Environment.Exit(0);             
             }
             
             RobotControl robotControl;
@@ -240,6 +258,11 @@ namespace ConnectFour.Console
             RoboticsErrorCode errorCode = robotControl.PlayMove(Convert.ToInt32(args[1]));
             // Wenn der Spielzug erfolgreich ausgeführt wurde, gib 1 zurück, ansosnten -1
 
+            writeRoboticsErrorCode(errorCode);
+        }
+
+        private static void writeRoboticsErrorCode(RoboticsErrorCode errorCode)
+        {
             switch (errorCode)
             {
                 case RoboticsErrorCode.OK:

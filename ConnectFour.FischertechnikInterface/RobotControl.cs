@@ -6,9 +6,10 @@ namespace ConnectFour.FischertechnikInterface
     public class RobotControl
     {
         private FTConnectionInterface ftci;
-        private const int dropMax = 2250;
+        private const int dropMax = 1580;
 
         private static readonly int[] fieldPositions = {5121, 4540, 3970, 3412, 2845, 2277, 1718};
+        private const int EPSILON = -50;
 
         public RobotControl(string ip)
         {
@@ -113,7 +114,7 @@ namespace ConnectFour.FischertechnikInterface
             // CONNECT
             if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
 
-            int neededC = fieldPositions[x];
+            int neededC = fieldPositions[x] + EPSILON;
 
             InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
             int c = iip.C(0);
@@ -191,6 +192,36 @@ namespace ConnectFour.FischertechnikInterface
             //}
 
             Thread.Sleep(500);
+
+            // DISCONNECT
+            ftci.Disconnect();
+
+            return RoboticsErrorCode.OK;
+        }
+
+        public RoboticsErrorCode TurnOnLED(string color)
+        {
+            // CONNECT
+            if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
+
+            for (int i = 0; i < 20; i++)
+            {
+                if (color == "red" || color == "RED")
+                {
+                    ftci.SendInterfacePacket(MotorMovement.STOP, 0, MotorMovement.STOP, 0, MotorMovement.STOP, 0,
+                        MotorMovement.LEFT, 250);
+                }
+                else if (color == "green" || color == "GREEN")
+                {
+                    ftci.SendInterfacePacket(MotorMovement.STOP, 0, MotorMovement.STOP, 0, MotorMovement.LEFT, 250,
+                        MotorMovement.STOP, 0);
+                }
+                else
+                {
+                    return RoboticsErrorCode.UNDEFINED;
+                }
+            }
+
 
             // DISCONNECT
             ftci.Disconnect();

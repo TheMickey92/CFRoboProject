@@ -3,4 +3,3 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.FischertechnikInterface\bin\Debug\FischertechnikInterface.pdb
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.FischertechnikInterface\obj\Debug\FischertechnikInterface.dll
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.FischertechnikInterface\obj\Debug\FischertechnikInterface.pdb
-C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.FischertechnikInterface\obj\Debug\ConnectFour.FischertechnikInterface.csprojResolveAssemblyReference.cache
