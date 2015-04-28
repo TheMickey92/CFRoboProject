@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -30,9 +29,9 @@ namespace ConnectFour.Logic.Strategy
                 Point move = new Point();
                 globalCurrentPlayerBuffer = gameControl.GetCurrentPlayer();
 
-                MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
-                if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) 
-                    return;
+                //MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
+                //if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) 
+                //    return;
 
                 // wenn nur noch eine Möglichkeit übrig ist, dann diese spielen
                 if (oneMoveLeft(possibleMoves))
@@ -88,10 +87,10 @@ namespace ConnectFour.Logic.Strategy
             if (gameControl.GetValidMovesCount() == 0 && !win1 && ! win2) // DRAW!
                 return 0;
 
-            if (globalCurrentPlayerBuffer == 1 && win1 || globalCurrentPlayerBuffer == 2 && win2)
+            if (gameControl.GetCurrentPlayer() == 1 && win1 || gameControl.GetCurrentPlayer() == 2 && win2)
                 return 1;
 
-            if (globalCurrentPlayerBuffer == 1 && win2 || globalCurrentPlayerBuffer == 2 && win1)
+            if (gameControl.GetCurrentPlayer() == 1 && win2 || gameControl.GetCurrentPlayer() == 2 && win1)
                 return -1;
 
             int catched = PlayerStrategies.CatchMoves(gameControl);
@@ -101,7 +100,10 @@ namespace ConnectFour.Logic.Strategy
 
             if (deep == MAX_DEEP) // Abbruch, um zeitnah zu bleiben!
             {
-                return random.Next(-99, 100)/100.0; // TODO hier wird zufällig gewählt, wenn MAX_DEEP erreicht wurde
+                //return random.Next(-99, 100)/100.0; // TODO hier wird zufällig gewählt, wenn MAX_DEEP erreicht wurde
+                // Evaluate
+                double eval = MoveEvaluation.evaluateContent(gameControl.GetGamefield(), gameControl.GetCurrentPlayer());
+                return eval;
             }
 
             // Führe Zug durch und teste

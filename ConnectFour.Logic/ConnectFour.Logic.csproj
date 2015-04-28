@@ -49,10 +49,14 @@
     <Compile Include="IPlayer.cs" />
     <Compile Include="IOutput.cs" />
     <Compile Include="Strategy\MemorizedMoveMaker.cs" />
+    <Compile Include="Strategy\MoveEvaluation.cs" />
     <Compile Include="Strategy\NegMaxMemorizer.cs" />
     <Compile Include="Strategy\NegMaxPlayer.cs" />
     <Compile Include="Strategy\PlayerStrategies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
