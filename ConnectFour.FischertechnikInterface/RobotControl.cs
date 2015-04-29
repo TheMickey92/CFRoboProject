@@ -199,12 +199,12 @@ namespace ConnectFour.FischertechnikInterface
             return RoboticsErrorCode.OK;
         }
 
-        public RoboticsErrorCode TurnOnLED(string color)
+        public RoboticsErrorCode TurnOnLED(string color, int length = 20)
         {
             // CONNECT
             if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (color == "red" || color == "RED")
                 {
