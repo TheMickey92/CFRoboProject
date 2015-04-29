@@ -17,6 +17,7 @@ namespace ConnectFour
             InitializeComponent();
             drawGameField();
             gameControl = new GameControl(this);
+
             newGame();
         }
 

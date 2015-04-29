@@ -32,12 +32,14 @@ namespace ConnectFour.Logic
         }
         public static bool IsSetByPlayer(int x, int y, int player, int[,] gamefield)
         {
+            if (!PointValid(new Point(x, y)))
+                return false;
             return gamefield[x, y] == player;
         }
 
         public static bool PointValid(Point p)
         {
-            return p.X != -1 && p.Y != -1;
+            return p.X != -1 && p.Y != -1 && p.X < 7 && p.Y < 6 && p.X >= 0 && p.Y >= 0;
         }
     }
 }

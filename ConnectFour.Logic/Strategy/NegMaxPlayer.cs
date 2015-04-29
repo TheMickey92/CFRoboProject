@@ -9,12 +9,15 @@ namespace ConnectFour.Logic.Strategy
         private GameControl gameControl;
         private Random random;
         private int globalCurrentPlayerBuffer;
-        private const int MAX_DEEP = 4;
+        private const int MAX_DEEP = 5;
+        private const int MAX_DEEP2 = 4;
+        private bool useMemorizer;
 
-        public NegMaxPlayer(GameControl gameControl)
+        public NegMaxPlayer(GameControl gameControl, bool useMemorizer=false)
         {
             this.gameControl = gameControl;
             random = new Random();
+            this.useMemorizer = useMemorizer;
         }
         
         public void Turn()
@@ -29,9 +32,12 @@ namespace ConnectFour.Logic.Strategy
                 Point move = new Point();
                 globalCurrentPlayerBuffer = gameControl.GetCurrentPlayer();
 
-                //MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
-                //if (memorizedMoveMaker.MemorizedMovePlayed(gameControl)) 
-                //    return;
+                if(useMemorizer)
+                {
+                    MemorizedMoveMaker memorizedMoveMaker = new MemorizedMoveMaker();
+                    if (memorizedMoveMaker.MemorizedMovePlayed(gameControl))
+                        return;
+                }
 
                 // wenn nur noch eine Möglichkeit übrig ist, dann diese spielen
                 if (oneMoveLeft(possibleMoves))
@@ -98,7 +104,7 @@ namespace ConnectFour.Logic.Strategy
                 return catched;
 
 
-            if (deep == MAX_DEEP) // Abbruch, um zeitnah zu bleiben!
+            if (deep >= getRandomMaxDeep()) // Abbruch, um zeitnah zu bleiben!
             {
                 //return random.Next(-99, 100)/100.0; // TODO hier wird zufällig gewählt, wenn MAX_DEEP erreicht wurde
                 // Evaluate
@@ -135,6 +141,14 @@ namespace ConnectFour.Logic.Strategy
             }
 
             return count == 6;
+        }
+
+        private int getRandomMaxDeep()
+        {
+            double d = random.Next(-100, 101);
+            if (d >= 60)
+                return MAX_DEEP2;
+            return MAX_DEEP;
         }
     }
 }
