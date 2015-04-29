@@ -72,16 +72,19 @@ namespace ConnectFour.SystemControlGUI
 
             if(player == 1)
             {
+                greenLight.On();
                 mainTimer.Interval = 300;
-                mainTimer.Enabled = true;
                 mainTimer_Tick(sender, e);
+                mainTimer.Enabled = true;
                 return;
             }
 
             string newJSONStatus = imageRecognition();
             if (newJSONStatus != lastJSONStatus)
             {
+                redLight.On();
                 MessageBox.Show("Bitte zuerst das Spielfeld leeren!");
+                redLight.Off();
                 return;
             }
             // Zug berechnen
@@ -90,7 +93,9 @@ namespace ConnectFour.SystemControlGUI
             // Zug durchführen
             if (!playMove(nextMove.X))
             {
+                redLight.On();
                 MessageBox.Show("Robotics Error!");
+                redLight.Off();
                 return;
             }
 
@@ -109,9 +114,11 @@ namespace ConnectFour.SystemControlGUI
             string newJSONStatus = imageRecognition();
             if (newJSONStatus == "-1")
             {
+                redLight.On();
                 MessageBox.Show(
                     "Bei der Bilderkennung ist ein Fehler aufgetreten.\n" +
                     "Stellen Sie sicher, dass die Kamera angeschlossen ist!");
+                redLight.Off();
                 return;
             }
 
@@ -152,12 +159,14 @@ namespace ConnectFour.SystemControlGUI
                 cheat = false;
 
             // Zug durchführen
+            greenLight.Off();
             if (!playMove(nextMove.X)) return;
 
             // Speichern, dass Zug bereits bekannt ist.
             //lastJSONStatus = newJSONStatus;
             safeLastJSON(newJSONStatus, nextMove.X, nextMove.Y, nextMove.Player);
 
+            greenLight.On();
             mainTimer.Enabled = true;
         }
 
@@ -265,12 +274,14 @@ namespace ConnectFour.SystemControlGUI
 
         private void secondChance()
         {
+            redLight.On();
             secondChanceTimer.Interval = 1500;
             secondChanceTimer.Start();
         }
 
         private void secondChanceTimer_Tick(object sender, EventArgs e)
         {
+            redLight.Off();
             secondChanceTimer.Stop();
             mainTimer_Tick(sender ,e);
         }
