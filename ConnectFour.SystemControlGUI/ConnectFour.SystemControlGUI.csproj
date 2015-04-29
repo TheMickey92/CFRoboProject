@@ -56,6 +56,9 @@
     <Compile Include="ChoosePlayer.Designer.cs">
       <DependentUpon>ChoosePlayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="LightHandling\GreenLight.cs" />
+    <Compile Include="LightHandling\Lighthandler.cs" />
+    <Compile Include="LightHandling\RedLight.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

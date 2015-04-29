@@ -54,6 +54,8 @@ namespace ConnectFour.SystemControlGUI
         {
             mainTimer.Enabled = false;
             secondChanceTimer.Enabled = false;
+            greenLight.Off();
+            redLight.Off();
         }
 
         private void btnStart_Click(object sender, EventArgs e)

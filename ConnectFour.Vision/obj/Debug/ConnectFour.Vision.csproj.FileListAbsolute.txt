@@ -13,6 +13,5 @@ C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.Video.dll
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.Video.xml
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\bin\Debug\AForge.Video.DirectShow.xml
-C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\obj\Debug\ConnectFour.Vision.csprojResolveAssemblyReference.cache
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\obj\Debug\ConnectFour.Vision.ImageView.resources
 C:\Users\MarcelB\Documents\Visual Studio 2013\Projects\CFRoboProject\ConnectFour.Vision\obj\Debug\ConnectFour.Vision.csproj.GenerateResource.Cache
