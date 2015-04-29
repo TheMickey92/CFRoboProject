@@ -72,20 +72,20 @@ namespace ConnectFour.FischertechnikInterface
 
             for (int i = 0; i < 50; i++)
             {
-                iip = ftci.SendInterfacePacket(MotorMovement.RIGHT, MotorMovement.STOP, MotorMovement.STOP,
-                    MotorMovement.STOP);
+                //iip = ftci.SendInterfacePacket(MotorMovement.RIGHT, MotorMovement.STOP, MotorMovement.STOP,
+                //    MotorMovement.STOP);
+                iip = moveMotorRedLight(MotorMovement.RIGHT, MotorMovement.STOP);
             }
 
-            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
-                MotorMovement.STOP,
-                true, true, true, true); // RESET der Incrementalgeber und Motoren
+            iip = reset(); // RESET der Incrementalgeber und Motoren
 
             iip = ftci.GetInterfaceInformation();
 
             while (iip.C(2) == 0) // Solange bis Schalter erreicht wurde oder Zeit abgelaufen ist
             {
-                iip = ftci.SendInterfacePacket(MotorMovement.LEFT, MotorMovement.STOP, MotorMovement.STOP,
-                    MotorMovement.STOP);
+                //iip = ftci.SendInterfacePacket(MotorMovement.LEFT, MotorMovement.STOP, MotorMovement.STOP,
+                //    MotorMovement.STOP);
+                iip = moveMotorRedLight(MotorMovement.LEFT, MotorMovement.STOP);
                 //iip = ftci.GetInterfaceInformation();
                 //Console.WriteLine(iip.C(3));
             }
@@ -99,9 +99,7 @@ namespace ConnectFour.FischertechnikInterface
 
             iip = ftci.GetInterfaceInformation();
 
-            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
-                MotorMovement.STOP,
-                true, true, true, true); // RESET der Incrementalgeber und Motoren
+            iip = reset(); // RESET der Incrementalgeber und Motoren
             iip = ftci.GetInterfaceInformation();
 
             // DISCONNECT
@@ -122,8 +120,9 @@ namespace ConnectFour.FischertechnikInterface
             // Fahre zu Position
             while (c < neededC) // Solange Position noch nicht erreicht wurde
             {
-                iip = ftci.SendInterfacePacket(MotorMovement.RIGHT, MotorMovement.STOP, MotorMovement.STOP,
-                    MotorMovement.STOP);
+                //iip = ftci.SendInterfacePacket(MotorMovement.RIGHT, MotorMovement.STOP, MotorMovement.STOP,
+                //    MotorMovement.STOP);
+                iip = moveMotorRedLight(MotorMovement.RIGHT, MotorMovement.STOP);
 
                 //iip = ftci.GetInterfaceInformation();
                 c = iip.C(0);
@@ -143,9 +142,7 @@ namespace ConnectFour.FischertechnikInterface
             if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
 
             InterfaceInformationPacket iip = ftci.GetInterfaceInformation();
-            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
-                MotorMovement.STOP,
-                true, true, true, true); // RESET der Incrementalgeber und Motoren
+            iip = reset(); // RESET der Incrementalgeber und Motoren
 
 
             //for (int i = 0; i < 50; i++)
@@ -160,28 +157,26 @@ namespace ConnectFour.FischertechnikInterface
 
             while (iip.C(3) == 0)
             {
-                iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.LEFT, MotorMovement.STOP,
-                    MotorMovement.STOP);
+                //iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.LEFT, MotorMovement.STOP,
+                //    MotorMovement.STOP);
+                iip = moveMotorRedLight(MotorMovement.STOP, MotorMovement.LEFT);
             }
 
-            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
-                MotorMovement.STOP,
-                true, true, true, true); // RESET der Incrementalgeber und Motoren
+            iip = reset(); // RESET der Incrementalgeber und Motoren
 
 
             iip = ftci.GetInterfaceInformation();
             int c = iip.C(1);
             while (c < dropMax)
             {
-                iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.RIGHT, MotorMovement.STOP,
-                    MotorMovement.STOP);
+                //iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.RIGHT, MotorMovement.STOP,
+                //    MotorMovement.STOP);
+                iip = moveMotorRedLight(MotorMovement.STOP, MotorMovement.RIGHT);
                 c = iip.C(1);
             }
 
 
-            iip = ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
-                MotorMovement.STOP,
-                true, true, true, true); // RESET der Incrementalgeber und Motoren
+            iip = reset(); // RESET der Incrementalgeber und Motoren
 
             //iip = ftci.GetInterfaceInformation();
 
@@ -199,7 +194,7 @@ namespace ConnectFour.FischertechnikInterface
             return RoboticsErrorCode.OK;
         }
 
-        public RoboticsErrorCode TurnOnLED(string color, int length = 20)
+        public RoboticsErrorCode TurnOnLED(string color, int length = 10)
         {
             // CONNECT
             if (!ftci.Connected()) return RoboticsErrorCode.NOT_CONNECTED;
@@ -208,8 +203,7 @@ namespace ConnectFour.FischertechnikInterface
             {
                 if (color == "red" || color == "RED")
                 {
-                    ftci.SendInterfacePacket(MotorMovement.STOP, 0, MotorMovement.STOP, 0, MotorMovement.STOP, 0,
-                        MotorMovement.LEFT, 250);
+                    moveMotorRedLight(MotorMovement.STOP, MotorMovement.STOP);
                 }
                 else if (color == "green" || color == "GREEN")
                 {
@@ -227,6 +221,19 @@ namespace ConnectFour.FischertechnikInterface
             ftci.Disconnect();
 
             return RoboticsErrorCode.OK;
+        }
+
+        private InterfaceInformationPacket moveMotorRedLight(MotorMovement m1, MotorMovement m2)
+        {
+            return ftci.SendInterfacePacket(m1, 512, m2, 512, MotorMovement.STOP, 0,
+                        MotorMovement.LEFT, 250);
+        }
+
+        private InterfaceInformationPacket reset()
+        {
+            return ftci.SendInterfacePacket(MotorMovement.STOP, MotorMovement.STOP, MotorMovement.STOP,
+                MotorMovement.STOP,
+                true, true, true, true); 
         }
     }
 }

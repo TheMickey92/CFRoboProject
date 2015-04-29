@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using ConnectFour.Console;
+using ConnectFour.SystemControlGUI.LightHandling;
 
 namespace ConnectFour.SystemControlGUI
 {
@@ -14,8 +15,10 @@ namespace ConnectFour.SystemControlGUI
         private Process console;
         private string ip = "";
         FieldView fieldView = new FieldView();
-
         private bool cheat;
+
+        private GreenLight greenLight;
+        private RedLight redLight;
 
         public MainForm()
         {
@@ -33,6 +36,8 @@ namespace ConnectFour.SystemControlGUI
                 Environment.Exit(0);
             }
 
+            greenLight = new GreenLight(pathToConsole);
+            redLight = new RedLight(pathToConsole);
             initializeProcess();
         }
 
