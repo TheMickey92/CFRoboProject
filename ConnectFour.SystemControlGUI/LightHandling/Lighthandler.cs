@@ -10,6 +10,8 @@ namespace ConnectFour.SystemControlGUI.LightHandling
         protected Process console;
         private string pathToConsole;
 
+        private bool stop = false;
+
         protected LightHandler(string pathToConsole)
         {
             this.pathToConsole = pathToConsole;
@@ -29,6 +31,7 @@ namespace ConnectFour.SystemControlGUI.LightHandling
 
         public void On()
         {
+            stop = false;
             thread = new Thread(workConsole);
             thread.Start();
         }
@@ -37,8 +40,10 @@ namespace ConnectFour.SystemControlGUI.LightHandling
         {
             try
             {
-                thread.Abort();
-                console.Close();
+                //console.WaitForExit();
+                //console.Close();
+                //thread.Abort();
+                stop = true;
             }
             catch (Exception)
             {
@@ -48,7 +53,7 @@ namespace ConnectFour.SystemControlGUI.LightHandling
 
         private void workConsole()
         {
-            while (true)
+            while (!stop)
             {
                 try
                 {

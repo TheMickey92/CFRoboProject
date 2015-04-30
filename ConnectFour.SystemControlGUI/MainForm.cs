@@ -17,6 +17,8 @@ namespace ConnectFour.SystemControlGUI
         FieldView fieldView = new FieldView();
         private bool cheat;
 
+        private bool stop = false;
+
         private GreenLight greenLight;
         private RedLight redLight;
 
@@ -36,8 +38,9 @@ namespace ConnectFour.SystemControlGUI
                 Environment.Exit(0);
             }
 
-            greenLight = new GreenLight(pathToConsole);
             redLight = new RedLight(pathToConsole);
+            greenLight = new GreenLight(pathToConsole);
+
             initializeProcess();
         }
 
@@ -52,14 +55,14 @@ namespace ConnectFour.SystemControlGUI
 
         private void btnStop_Click(object sender, EventArgs e)
         {
+            stop = true;
             mainTimer.Enabled = false;
             secondChanceTimer.Enabled = false;
-            greenLight.Off();
-            redLight.Off();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            stop = false;
             lastJSONStatus =
                 "[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]";
 
@@ -74,7 +77,6 @@ namespace ConnectFour.SystemControlGUI
 
             if(player == 1)
             {
-                greenLight.On();
                 mainTimer.Interval = 300;
                 mainTimer_Tick(sender, e);
                 mainTimer.Enabled = true;
@@ -112,6 +114,8 @@ namespace ConnectFour.SystemControlGUI
         {
             mainTimer.Enabled = false;
 
+            greenLight.On();
+
             // Bilderkennung
             string newJSONStatus = imageRecognition();
             if (newJSONStatus == "-1")
@@ -120,10 +124,12 @@ namespace ConnectFour.SystemControlGUI
                 MessageBox.Show(
                     "Bei der Bilderkennung ist ein Fehler aufgetreten.\n" +
                     "Stellen Sie sicher, dass die Kamera angeschlossen ist!");
+                greenLight.Off();
                 redLight.Off();
                 return;
             }
 
+            greenLight.Off();
             // Zug berechnen
             NextMove nextMove = processNextMove(lastJSONStatus, newJSONStatus);
             if (nextMove.State != -1)
@@ -132,11 +138,15 @@ namespace ConnectFour.SystemControlGUI
                 switch (nextMove.State)
                 {
                     case 0:
+                        greenLight.On();
                         MessageBox.Show("UNENTSCHIEDEN!");
+                        greenLight.Off();
                         break;
                     case 1:
                     case 2:
+                        greenLight.On();
                         MessageBox.Show("Spieler " + nextMove.State + " gewinnt!");
+                        greenLight.Off();
                         break;
                     case -2:
                         if (!cheat)
@@ -145,13 +155,17 @@ namespace ConnectFour.SystemControlGUI
                             secondChance();
                             return;
                         }
+                        redLight.On();
                         MessageBox.Show("CHEAT!");
+                        redLight.Off();
                         break;
                     case -5:
                         mainTimer.Enabled = true;
                         return;
                     default:
+                        redLight.On();
                         MessageBox.Show("Es ist ein Fehler aufgetreten!");
+                        redLight.Off();
                         break;
                 }
                 return;
@@ -161,15 +175,14 @@ namespace ConnectFour.SystemControlGUI
                 cheat = false;
 
             // Zug durchführen
-            greenLight.Off();
             if (!playMove(nextMove.X)) return;
 
             // Speichern, dass Zug bereits bekannt ist.
             //lastJSONStatus = newJSONStatus;
             safeLastJSON(newJSONStatus, nextMove.X, nextMove.Y, nextMove.Player);
 
-            greenLight.On();
-            mainTimer.Enabled = true;
+            if (!stop)
+                mainTimer.Enabled = true;
         }
 
         private void safeLastJSON(string newJSONStatus, int x, int y, int player)
@@ -276,14 +289,13 @@ namespace ConnectFour.SystemControlGUI
 
         private void secondChance()
         {
-            redLight.On();
             secondChanceTimer.Interval = 1500;
-            secondChanceTimer.Start();
+            if (!stop)
+                secondChanceTimer.Start();
         }
 
         private void secondChanceTimer_Tick(object sender, EventArgs e)
         {
-            redLight.Off();
             secondChanceTimer.Stop();
             mainTimer_Tick(sender ,e);
         }

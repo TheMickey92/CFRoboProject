@@ -9,7 +9,7 @@
 
         protected override void setParameter()
         {
-            console.StartInfo.Arguments = "robot led green";
+            console.StartInfo.Arguments = "robot led red";
         }
     }
 }
