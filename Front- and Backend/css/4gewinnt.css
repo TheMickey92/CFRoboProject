@@ -1,0 +1,131 @@
+#game
+{
+	box-shadow: 10px 10px 10px grey;
+	border: 1pt solid grey;
+	width: 600pt;
+	height: 350pt;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#info
+{
+	margin-top: -50pt;
+	float: left;
+	padding: 5pt;
+	background-image: url("../img/bg_info.png");
+	height:340pt;
+	width:240pt;
+}
+
+#info div
+{
+	margin-top: 40pt;
+	margin-left: 30pt;
+	margin-right: 30pt;
+	color: white;
+	font-size: 12pt;
+	font-family: Comic Sans MS;
+	text-align:center;
+}
+
+.row
+{
+	clear: both;
+}
+
+/* Preview Row*/
+
+.previewCell
+{
+	background-color: #FFFFFF !important;
+	
+}
+
+.previewTile
+{
+	visibility:hidden;
+}
+
+/* Cell */
+
+.cell
+{
+	float: left;
+	background-color: #0000D3;
+	height: 50pt;
+	width: 50pt;
+}
+.circle
+{
+	height: 40pt;
+	width: 40pt;
+	border-radius: 20pt;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 4pt;
+	border: 1px solid #00F0FF;
+	background:linear-gradient(to bottom right, white 30%, lightgrey 90%);
+}
+.circle:hover
+{
+	margin-top: 3pt;
+	border: 2px solid red;
+}
+
+.circle.finished:hover
+{
+	margin-top: 4pt;
+	border: 1px solid #00F0FF;
+}
+
+.circle.winningChip{
+	margin-top: 3pt;
+	border: 3px solid #7FFF00;
+}
+
+.circle.winningChip:hover
+{
+	margin-top: 3pt;
+	border: 3px solid #7FFF00;
+}
+
+/* Red and Yellow Tile*/
+
+.redTile
+{
+	background:linear-gradient(to bottom right, red 30%, darkred 98%);
+	border: 1px solid darkred;
+}
+
+.redTile:hover
+{
+	border: 1px solid darkred;
+	margin-top: 4pt;
+}
+
+.yellowTile
+{
+	background:linear-gradient(to bottom right, yellow 30%, #FF9900 90%);
+	border: 1px solid #FF9900;
+}
+
+.yellowTile:hover
+{
+	border: 1px solid #FF9900;
+	margin-top: 4pt;
+}
+
+/* Border for Tiles when cheating is activated */
+.greenBorder:hover
+{
+	border: 3px solid #40FF00 !important;
+}
+
+.redText{
+	color:red;
+}
+
+.yellowText{
+	color:yellow;
+}
